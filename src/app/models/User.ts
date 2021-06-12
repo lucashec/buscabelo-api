@@ -1,0 +1,22 @@
+import {Entity, Column, PrimaryGeneratedColumn, TableInheritance, ChildEntity} from 'typeorm';
+
+@Entity()
+@TableInheritance({ column: { type: 'varchar', name: 'type' } })
+export default abstract class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({
+    unique:true,
+  })
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column({
+    nullable:true,
+  })
+  avatar: string;
+
+}
