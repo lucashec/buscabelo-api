@@ -1,9 +1,9 @@
 import { request } from 'express';
 import {getRepository} from 'typeorm'
-import Customer from '../app/models/Customer';
-import Provider from '../app/models/Provider';
-import Service from '../app/models/Service';
-import {Type} from '../app/models/Service';
+import Customer from '../models/Customer';
+import Provider from '../models/Provider';
+import Service from '../models/Service';
+import {Type} from '../models/Service';
 
 interface Request{
   name: string;
