@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
+import { Request, Response, } from 'express';
 import CreateServiceHelper from '../services/CreateServiceHelper';
 
 class ServiceController {
-
+ 
   async getAll(request: Request, response: Response) {
+    console.log(request.user);
     try {
       const customerService = new CreateServiceHelper();
 
