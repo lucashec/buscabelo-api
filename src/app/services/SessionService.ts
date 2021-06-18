@@ -4,6 +4,7 @@ import {getRepository} from 'typeorm';
 import User from '../models/User';
 import authConfig from '../../config/auth'
 
+
 interface Request{
   email:string,
   password: string,
@@ -17,7 +18,6 @@ interface Response{
 export default class SessionService{
   public async execute({email, password}: Request): Promise<Response>{
     const userRepository = getRepository(User);
-
     const user =  await userRepository.findOne({
       where:{email}
     });
@@ -32,11 +32,9 @@ export default class SessionService{
       throw new Error('email/password did not match');
     }
     const {secret, expiresIn} = authConfig.jwt
-    const token =  sign({},
-      authConfig.jwt.secret,{
-        subject: user.id,
-        expiresIn,
-      }
+    const token =  sign({id:user.id},
+        secret,{
+        expiresIn,}
       )
     return {
       user,

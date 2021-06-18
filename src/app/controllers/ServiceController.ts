@@ -4,12 +4,10 @@ import CreateServiceHelper from '../services/CreateServiceHelper';
 class ServiceController {
  
   async getAll(request: Request, response: Response) {
-    console.log(request.user);
     try {
       const customerService = new CreateServiceHelper();
 
       const services = await customerService.find()
-
       return response.status(200).json({
         message: "Services found!",
         data: services
