@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import CreateCustomerService from '../services/CustomerService';
 
-class UserController {
+class UserController{
 
   async getAll(request: Request, response: Response){
     try{
@@ -24,13 +24,14 @@ class UserController {
     try{
       const customerService = new CreateCustomerService();
 
-      const {email, password} =  request.body;
+      const {name, email, password} =  request.body;
   
       const user = await customerService.execute({
+        name,
         email,
-        password
+        password 
       });
-  
+      
       return response.status(200).json({
         message: "user Created!",
         data: user
