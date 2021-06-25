@@ -24,8 +24,9 @@ export default class CreateAppointmentService{
  }:Request):Promise<Appointment> {
    
   const appointmentRepository = getCustomRepository(AppointmentRepository);
-  
+  console.log(appointment_to);
   const appointmentDate = startOfHour(appointment_to);
+  
   const scheduledDate = startOfHour(scheduled_at);
 
   const findAppointmentInSameDate = await appointmentRepository.findByDate(
@@ -42,7 +43,7 @@ export default class CreateAppointmentService{
     customer,
     service,
     appointment_to: appointmentDate,
-    scheduled_at: scheduledDate,
+    scheduled_at:scheduledDate,
   });
 
   await appointmentRepository.save(appointment);

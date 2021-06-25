@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {parseISO, format} from 'date-fns'
+import {parseISO, format} from 'date-fns';
 import {getCustomRepository} from 'typeorm'
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import AppointmentRepository from '../repositories/AppointmentRepository';
@@ -17,15 +17,14 @@ class AppointmentController{
       const {
         provider, 
         customer, 
-        appoitment_to, 
+        appointment_to, 
         service, 
       } = request.body;
       
       const timeNow = format(new Date, 'yyyy-MM-dd');
       const timeNowParsed = parseISO(timeNow);
-      const parsedDate = parseISO(appoitment_to); 
-      console.log(parsedDate);
-      console.log(timeNowParsed);
+      const parsedDate = parseISO(appointment_to); 
+    
       const createAppointment = new CreateAppointmentService();
 
       const appointment = await createAppointment.execute({
@@ -33,7 +32,7 @@ class AppointmentController{
         customer,
         appointment_to: parsedDate,
         service,
-        scheduled_at: parsedDate,
+        scheduled_at: timeNowParsed,
       })
       return response.json(appointment);
     } catch(err){

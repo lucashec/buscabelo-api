@@ -8,16 +8,22 @@ export default class Appointment{
   @PrimaryGeneratedColumn()
   id:number;
 
-  @Column('time with time zone')
+  @Column('timestamp')
   scheduled_at: Date;
 
-  @Column('time with time zone')
+  @Column('timestamp')
   appointment_to: Date;
 
-  @Column('time with time zone')
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
   time_done_at: Date;
 
-  @Column('time with time zone')
+  @Column({
+    type:'timestamp',
+    nullable:true,
+  })
   canceled_at: Date;
 
   @OneToOne(() => Provider)
