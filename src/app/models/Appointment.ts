@@ -1,23 +1,24 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import Customer from "./Customer";
 import Provider from "./Provider";
+import Service from "./Service";
 
 @Entity()
 export default class Appointment{
   @PrimaryGeneratedColumn()
   id:number;
 
-  @Column({ type: "timestamp" })
-  scheduled_at: string;
+  @Column('time with time zone')
+  scheduled_at: Date;
 
-  @Column({ type: "timestamp" })
-  appointment_to: string;
+  @Column('time with time zone')
+  appointment_to: Date;
 
-  @Column({ type: "timestamp" })
-  time_done_at: string;
+  @Column('time with time zone')
+  time_done_at: Date;
 
-  @Column({ type: "timestamp" })
-  canceled_at: string;
+  @Column('time with time zone')
+  canceled_at: Date;
 
   @OneToOne(() => Provider)
   @JoinColumn()
@@ -26,4 +27,8 @@ export default class Appointment{
   @OneToOne(() => Customer)
   @JoinColumn()
   customer: Customer;
+
+  @OneToOne(() => Service)
+  @JoinColumn()
+  service: Service;
 }
