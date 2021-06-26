@@ -5,6 +5,7 @@ import ProviderController from '../app/controllers/ProviderController';
 const route = Router();
 
 route.get('/buscar', ProviderController.filterName);
+route.get('/:id', ProviderController.getById);
 route.get('/', ProviderController.getAll);
 route.post('/', ProviderController.create);
 
