@@ -35,6 +35,24 @@ class ServiceController {
     }
   }
 
+  async filterName(request: Request, response: Response) {
+    try {
+      let name = request.query["name"];
+      
+      const customerService = new CreateServiceHelper();
+
+      const service = await customerService.filterName(name);
+
+      return response.status(200).json({
+        message: "Services found!",
+        data: service
+      });
+
+    } catch (err) {
+      return response.status(400).json({ error: err.message })
+    }
+  }
+
   async create(request: Request, response: Response) {
     try {
       const { name, description, value, provider } = request.body;

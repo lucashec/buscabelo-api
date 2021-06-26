@@ -2,14 +2,9 @@ import { hash } from 'bcryptjs';
 import {getRepository} from 'typeorm'
 
 import Customer from '../models/Customer';
+import IUser from '../interface/IUser';
 
-interface ICustomer{
-  name: string,
-  email: string;
-  password: string;
-}
-
-export default class CustomerService{
+export default class CustomerService {
 
   public async find(): Promise<Customer[]>{
     const repository = getRepository(Customer);
@@ -17,13 +12,13 @@ export default class CustomerService{
     const users = await repository.find()
 
     if(users.length < 0) {
-      throw new Error ('no users found!');
+      throw new Error ('no customers found!');
     }
 
     return users;
   }
 
-  public async execute(newCustomer: ICustomer): Promise<Customer> {
+  public async execute(newCustomer: IUser): Promise<Customer> {
 
     const repository = getRepository(Customer);
     
