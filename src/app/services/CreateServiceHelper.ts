@@ -1,4 +1,4 @@
-import {getRepository} from 'typeorm'
+import {getRepository, Like} from 'typeorm'
 
 import Customer from '../models/Customer';
 import Provider from '../models/Provider';
@@ -35,6 +35,20 @@ export default class CreateServiceHelper{
     }
 
     return service;
+  }
+
+  public async filterName(name: any): Promise<Service[]> {
+    const repository = getRepository(Service);
+    // console.log(name)
+    const services = await repository.find({
+      name: Like(`%${name}%`)
+    });
+
+    if(!services || services.length == 0) {
+      throw new Error ('no services found!');
+    }
+
+    return services;
   }
 
   public async execute(newService:IService): Promise<Service> {
