@@ -3,7 +3,7 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "docker",
+  "password": "admin",
   "database": "db_buscabelo",
   "synchronize": true,
   "logging": false,

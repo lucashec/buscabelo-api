@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import CreateCustomerService from '../services/CustomerService';
+import CustomerService from '../services/CustomerService';
 
-class UserController{
+class CustomerController{
 
   async getAll(request: Request, response: Response){
     try{
-      const customerService = new CreateCustomerService();
+      const customerService = new CustomerService();
 
       const users = await customerService.find()
 
@@ -22,7 +22,7 @@ class UserController{
 
   async create(request: Request, response: Response){
     try{
-      const customerService = new CreateCustomerService();
+      const customerService = new CustomerService();
 
       const {name, email, password} =  request.body;
   
@@ -42,4 +42,4 @@ class UserController{
   }
 }
 
-export default new UserController();
+export default new CustomerController();
