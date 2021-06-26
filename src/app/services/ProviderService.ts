@@ -1,5 +1,5 @@
 import { hash } from 'bcryptjs';
-import { getRepository } from 'typeorm';
+import { getRepository, Like } from 'typeorm';
 
 import Provider from '../models/Provider';
 import IUser from '../interface/IUser';
@@ -14,6 +14,20 @@ export default class ProviderService {
     if(provider.length < 0) throw new Error('no provides found');
 
     return provider;
+  }
+
+  public async filterName(name: any): Promise<Provider[]> {
+    const repository = getRepository(Provider);
+    
+    const providers = await repository.find({
+      name: Like(`%${name}%`)
+    });
+
+    if(!providers || providers.length == 0) {
+      throw new Error ('no providers found!');
+    }
+
+    return providers;
   }
 
   public async execute(newProvider: IUser): Promise<Provider> {

@@ -39,7 +39,7 @@ export default class CreateServiceHelper{
 
   public async filterName(name: any): Promise<Service[]> {
     const repository = getRepository(Service);
-    // console.log(name)
+    
     const services = await repository.find({
       name: Like(`%${name}%`)
     });

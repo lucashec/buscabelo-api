@@ -20,6 +20,24 @@ class CustomerController{
     }
   }
 
+  async filterName(request: Request, response: Response) {
+    try {
+      let name = request.query["name"];
+      
+      const providerService = new ProviderService();
+
+      const providers = await providerService.filterName(name);
+
+      return response.status(200).json({
+        message: "Providers found!",
+        data: providers
+      });
+
+    } catch (err) {
+      return response.status(400).json({ error: err.message })
+    }
+  }
+
   async create(request: Request, response: Response){
     try{
       const service = new ProviderService();
