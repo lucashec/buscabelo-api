@@ -21,10 +21,6 @@ export default class CreateAppointmentService {
 
     const appointments = await repository.find()
 
-    if(appointments.length < 0) {
-      throw new Error ('no customers found!');
-    }
-
     return appointments;
   }
 

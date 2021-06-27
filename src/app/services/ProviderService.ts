@@ -11,8 +11,6 @@ export default class ProviderService {
 
     const provider = await repository.find();
 
-    if(provider.length < 0) throw new Error('no provides found');
-
     return provider;
   }
 
@@ -25,10 +23,6 @@ export default class ProviderService {
     const providers = await repository.find({
       name: Like(`%${name}%`)
     });
-
-    if(!providers || providers.length == 0) {
-      throw new Error ('no providers found!');
-    }
 
     return providers;
   }
