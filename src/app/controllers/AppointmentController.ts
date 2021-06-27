@@ -6,12 +6,22 @@ import AppointmentRepository from '../repositories/AppointmentRepository';
 
 class AppointmentController{  
 
-  async getAll(request:Request, response: Response){
-    const appointmentRepository = getCustomRepository(AppointmentRepository);
-    const appointments =  appointmentRepository.find();
+  async getAll(request: Request, response: Response){
+    try{
+      const service = new CreateAppointmentService();
 
-    return response.json(appointments);
+      const appointments = await service.find()
+
+      return response.status(200).json({
+        message: "appointments found!",
+        data: appointments
+      });
+
+    }catch(err){
+      return response.status(400).json({error : err.message});
+    }
   }
+  
   async create(request: Request, response: Response){
     try{
       const {

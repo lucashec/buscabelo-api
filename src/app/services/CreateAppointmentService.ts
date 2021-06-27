@@ -1,12 +1,12 @@
 import Customer from 'app/models/Customer';
 import Provider from 'app/models/Provider';
 import Service from 'app/models/Service';
-import {startOfHour, format} from 'date-fns';
-import { getCustomRepository } from 'typeorm';
+import { startOfHour, format } from 'date-fns';
+import { getCustomRepository, getRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
-interface Request{
+interface Request {
   provider: Provider;
   customer: Customer;
   appointment_to: Date;
@@ -14,40 +14,53 @@ interface Request{
   service: Service;
 }
 
-export default class CreateAppointmentService{
- public async execute({
-   provider,
-   customer,
-  appointment_to,
-  scheduled_at,
-  service
- }:Request):Promise<Appointment> {
-   
-  const appointmentRepository = getCustomRepository(AppointmentRepository);
-  console.log(appointment_to);
-  const appointmentDate = startOfHour(appointment_to);
-  
-  const scheduledDate = startOfHour(scheduled_at);
+export default class CreateAppointmentService {
 
-  const findAppointmentInSameDate = await appointmentRepository.findByDate(
-   appointmentDate,
-  );
-  
+  public async find(): Promise<Appointment[]>{
+    const repository = getRepository(Appointment);
 
-  if(findAppointmentInSameDate) {
-    throw Error("this time it's already booked");
+    const appointments = await repository.find()
+
+    if(appointments.length < 0) {
+      throw new Error ('no customers found!');
+    }
+
+    return appointments;
   }
 
-  const appointment = appointmentRepository.create({
+  public async execute({
     provider,
     customer,
-    service,
-    appointment_to: appointmentDate,
-    scheduled_at:scheduledDate,
-  });
+    appointment_to,
+    scheduled_at,
+    service
+  }: Request): Promise<Appointment> {
 
-  await appointmentRepository.save(appointment);
+    const appointmentRepository = getCustomRepository(AppointmentRepository);
 
-  return appointment;
- } 
+    const appointmentDate = startOfHour(appointment_to);
+
+    const scheduledDate = startOfHour(scheduled_at);
+
+    const findAppointmentInSameDate = await appointmentRepository.findByDate(
+      appointmentDate,
+    );
+
+
+    if (findAppointmentInSameDate) {
+      throw Error("this time it's already booked");
+    }
+
+    const appointment = appointmentRepository.create({
+      provider,
+      customer,
+      service,
+      appointment_to: appointmentDate,
+      scheduled_at: scheduledDate,
+    });
+
+    await appointmentRepository.save(appointment);
+
+    return appointment;
+  }
 }
