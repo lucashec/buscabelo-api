@@ -38,6 +38,9 @@ export default class CreateServiceHelper{
   }
 
   public async filterName(name: any): Promise<Service[]> {
+
+    if(name == "") throw new Error ('Nenhuma informação enviada!');
+
     const repository = getRepository(Service);
     
     const services = await repository.find({
@@ -45,7 +48,7 @@ export default class CreateServiceHelper{
     });
 
     if(!services || services.length == 0) {
-      throw new Error ('no services found!');
+      throw new Error ('Serviços não informados');
     }
 
     return services;
