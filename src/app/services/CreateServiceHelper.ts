@@ -13,14 +13,10 @@ interface IService{
 
 export default class CreateServiceHelper{
 
-  public async find(): Promise<Service[]>{
+  public async find(providerId: string): Promise<Service[]>{
     const repository = getRepository(Service);
 
-    const services = await repository.find()
-
-    if(services.length < 0) {
-      throw new Error ('no services found!');
-    }
+    const services = await repository.find({provider: {id: providerId}})
 
     return services;
   }
