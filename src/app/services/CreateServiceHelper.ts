@@ -13,14 +13,10 @@ interface IService{
 
 export default class CreateServiceHelper{
 
-  public async find(): Promise<Service[]>{
+  public async find(providerId: string): Promise<Service[]>{
     const repository = getRepository(Service);
 
-    const services = await repository.find()
-
-    if(services.length < 0) {
-      throw new Error ('no services found!');
-    }
+    const services = await repository.find({provider: {id: providerId}})
 
     return services;
   }
@@ -38,6 +34,9 @@ export default class CreateServiceHelper{
   }
 
   public async filterName(name: any): Promise<Service[]> {
+
+    if(name == "") throw new Error ('Nenhuma informação enviada!');
+
     const repository = getRepository(Service);
     
     const services = await repository.find({
@@ -45,7 +44,7 @@ export default class CreateServiceHelper{
     });
 
     if(!services || services.length == 0) {
-      throw new Error ('no services found!');
+      throw new Error ('Serviços não informados');
     }
 
     return services;

@@ -7,7 +7,7 @@ class ServiceController {
     try {
       const customerService = new CreateServiceHelper();
 
-      const services = await customerService.find()
+      const services = await customerService.find(request.user.id)
       return response.status(200).json({
         message: "Services found!",
         data: services

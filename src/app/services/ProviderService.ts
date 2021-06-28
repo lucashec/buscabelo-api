@@ -11,21 +11,18 @@ export default class ProviderService {
 
     const provider = await repository.find();
 
-    if(provider.length < 0) throw new Error('no provides found');
-
     return provider;
   }
 
   public async filterName(name: any): Promise<Provider[]> {
+
+    if(name == "") throw new Error ('Nenhuma informação enviada!');
+
     const repository = getRepository(Provider);
     
     const providers = await repository.find({
       name: Like(`%${name}%`)
     });
-
-    if(!providers || providers.length == 0) {
-      throw new Error ('no providers found!');
-    }
 
     return providers;
   }
