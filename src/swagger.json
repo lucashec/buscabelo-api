@@ -1,0 +1,595 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Buscabelo API",
+    "description": "Documentação das funcionalidades presentes no buscabelo",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": {
+      "email": "equipebuscabelo@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Dev API"
+    },
+    {
+      "url": "http://buscabelo-api/v1",
+      "description": "Prod API(não feito)"
+    }
+  ],
+  "paths": {
+    "/appointments": {
+      "get": {
+        "summary": "Busca lista de agendamentos cadastrados.",
+        "description": "Busca lista de agendamentos cadastrados.",
+        "tags": ["Appointments"],
+        "security": [{"bearerAuth": []}],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Appointment"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de agendamento",
+        "description": "Rota responsável pelo cadastro de um novo agendamento no sistema.",
+        "tags": ["Appointments"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "summary": "Busca lista de consumidores.",
+        "description": "Busca lista de consumidores.",
+        "tags": ["Customers"],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Customer"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de consumidor",
+        "description": "Rota responsável pelo cadastro de um novo consumidor no sistema.",
+        "tags": ["Customers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/providers": {
+      "get": {
+        "summary": "Busca lista de estabelecimentos.",
+        "description": "Busca lista de estabelecimentos.",
+        "tags": ["Providers"],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Provider"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de estabelecimento",
+        "description": "Rota responsável pelo cadastro de um novo estabelecimento no sistema.",
+        "tags": ["Providers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Provider"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Provider"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/providers/{id}": {
+      "get": {
+        "summary": "Busca de um estabelecimento pelo id.",
+        "description": "Busca de um estabelecimento pelo id.",
+        "tags": ["Providers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do estabelecimento pelo ID.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Provider"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/providers/search": {
+      "get": {
+        "summary": "Busca de um estabelecimento pelo nome.",
+        "description": "Busca de um estabelecimento pelo nome.",
+        "tags": ["Providers"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do estabelecimento para busca.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Provider"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/services": {
+      "get": {
+        "summary": "Busca lista de serviços de um estabelecimento autenticado.",
+        "description": "Busca lista de serviços de um estabelecimento autenticado.",
+        "tags": ["Services"],
+        "security": [{"bearerAuth": []}],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {"$ref": "#/components/schemas/Service"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de serviço",
+        "description": "Rota responsável pelo cadastro de um novo serviço do estabelecimento.",
+        "tags": ["Services"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Service"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/services/{id}": {
+      "get": {
+        "summary": "Busca de um serviço pelo id.",
+        "description": "Busca de um serviço pelo id.",
+        "tags": ["Services"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do serviço pelo ID.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar o serviço pelo id.",
+        "description": "Atualizar o serviço pelo id.",
+        "tags": ["Services"],
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualizar o serviço pelo ID.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Service"
+              }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "deletar o serviço pelo id.",
+        "description": "deletar o serviço pelo id.",
+        "tags": ["Services"],
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "deletar o serviço pelo ID.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/services/search": {
+      "get": {
+        "summary": "Busca de um serviço pelo nome.",
+        "description": "Busca de um serviço pelo nome.",
+        "tags": ["Services"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do serviço para busca.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Service"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "summary": "Cadastro de sessão",
+        "description": "Rota responsável pelo cadastro de uma nova sessão no sistema.",
+        "tags": ["Sessions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scheduled_at": {
+            "type": "string"
+          },
+          "appointment_to": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "customer": {
+            "type": "string"
+          },
+          "service": {
+            "type": "string"
+          },
+          "time_done_at": {
+            "type": "string"
+          },
+          "canceled_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "Provider": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "rating_average": {
+            "type": "number"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "provider": {
+            "type": "string"
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

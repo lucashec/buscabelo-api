@@ -11,11 +11,11 @@ export default function ensureAuthenticated(
   request: Request, 
   response: Response, 
   next: NextFunction
-  ): void{
+  ) {
   const authHeader =  request.headers.authorization;
 
   if(!authHeader){
-    throw new Error('JWT token not found');
+    return response.status(401).send();
   }
   const [,token] = authHeader.split(' ');
   try{
@@ -28,7 +28,7 @@ export default function ensureAuthenticated(
     return next();
 
   } catch{
-    throw new Error('Invalid JWT token');
+    return response.status(401).send();
   }
   
 }
