@@ -14,6 +14,18 @@ export default class ProviderService {
     return provider;
   }
 
+  public async findOne(id: string) {
+    const repository = getRepository(Provider);
+
+    const provider = await repository.findOne({id: id});
+
+    if(!provider) {
+      throw new Error ('no provider found!');
+    }
+
+    return provider;
+  }
+
   public async filterName(name: any): Promise<Provider[]> {
 
     if(name == "") throw new Error ('Nenhuma informação enviada!');
