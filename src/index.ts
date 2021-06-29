@@ -1,9 +1,10 @@
 import 'reflect-metadata';
+
 import express from 'express';
 import routes from './routes/index';
-import './database/connect';
 import cors from 'cors';
-import {parseISO, startOfHour} from 'date-fns'
+
+import './database/connect';
 
 const app = express();
 

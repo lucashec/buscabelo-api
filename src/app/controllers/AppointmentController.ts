@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import {parseISO, format} from 'date-fns';
-import {getCustomRepository} from 'typeorm'
+
 import CreateAppointmentService from '../services/CreateAppointmentService';
-import AppointmentRepository from '../repositories/AppointmentRepository';
 
 class AppointmentController{  
 
