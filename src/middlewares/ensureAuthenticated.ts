@@ -3,9 +3,9 @@ import {verify} from 'jsonwebtoken';
 import authConfig from '../config/auth';
 
 interface TokenPayload{
+  id: string,
   iat: number,
-  exp: number,
-  sub: string,
+  exp: number
 }
 export default function ensureAuthenticated(
   request: Request, 
@@ -20,10 +20,10 @@ export default function ensureAuthenticated(
   const [,token] = authHeader.split(' ');
   try{
     const decoded =  verify(token, authConfig.jwt.secret);
-    const {sub} = decoded as TokenPayload
+    const {id} = decoded as TokenPayload
     
      request.user = {
-      id: sub,
+      id: id,
      }
     return next();
 

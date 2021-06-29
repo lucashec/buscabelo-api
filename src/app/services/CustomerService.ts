@@ -11,10 +11,6 @@ export default class CustomerService {
 
     const users = await repository.find()
 
-    if(users.length < 0) {
-      throw new Error ('no customers found!');
-    }
-
     return users;
   }
 
