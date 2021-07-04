@@ -23,6 +23,11 @@ export default class CreateAppointmentService {
 
     return appointments;
   }
+  public async findOne(id : number): Promise<Appointment | undefined>{
+    const repository = getRepository(Appointment);
+    const appointment = await repository.findOne(id);
+    return appointment;
+  }
 
   public async execute({
     provider,
