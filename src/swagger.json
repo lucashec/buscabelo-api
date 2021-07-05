@@ -15,8 +15,8 @@
       "description": "Dev API"
     },
     {
-      "url": "http://buscabelo-api/v1",
-      "description": "Prod API(não feito)"
+      "url": "https://buscabelo-api.herokuapp.com/v1",
+      "description": "Prod API"
     }
   ],
   "paths": {
