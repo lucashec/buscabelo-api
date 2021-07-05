@@ -21,7 +21,7 @@ Após isso, ultize o comando:
 $ yarn dev
 ```
 
- Agora você pode ultilizar o Insomnia (Ou outro plataforma para testar as requisições da API) para testar a API na URL http://localhost:3000
+ Agora você pode ultilizar o Insomnia (Ou outro plataforma para testar as requisições da API) para testar a API na URL http://localhost:3000/v1
 
  Para acessar a documentação via swagger acesse a rota : http://localhost:3000/api-doc
 

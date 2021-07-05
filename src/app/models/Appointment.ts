@@ -26,15 +26,15 @@ export default class Appointment{
   })
   canceled_at: Date;
 
-  @OneToOne(() => Provider)
+  @OneToOne(type => Provider, {eager: true})
   @JoinColumn()
   provider: Provider;
 
-  @OneToOne(() => Customer)
+  @OneToOne(type => Customer, {eager: true})
   @JoinColumn()
   customer: Customer;
 
-  @OneToOne(() => Service)
+  @OneToOne(type => Service, {eager: true})
   @JoinColumn()
   service: Service;
 }

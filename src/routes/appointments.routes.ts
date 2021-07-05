@@ -7,5 +7,5 @@ const appointmentRouter = Router();
 
 appointmentRouter.post('/', ensureAuthenticated, appointmentController.create);
 appointmentRouter.get('/', ensureAuthenticated, appointmentController.getAll);
-
+appointmentRouter.get('/:id', ensureAuthenticated, appointmentController.getById);
 export default appointmentRouter;
