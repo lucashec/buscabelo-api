@@ -1,7 +1,7 @@
-import Customer from 'app/models/Customer';
-import Provider from 'app/models/Provider';
-import Service from 'app/models/Service';
-import { startOfHour, format } from 'date-fns';
+import Customer from '../models/Customer';
+import Provider from '../models/Provider';
+import Service from '../models/Service';
+import { startOfHour } from 'date-fns';
 import { getCustomRepository, getRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
