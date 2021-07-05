@@ -9,13 +9,10 @@ module.exports = {
    },
    "ssl": true,
    "entities": [
-      "dist/app/models/*.js"
+      "dist/src/app/models/*.js"
    ],
    "migrations": [
-      "dist/database/migrations/*.js"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
+      "dist/src/database/migrations/*.js"
    ],
    "cli": {
       "migrationsDir": "src/database/migrations"
