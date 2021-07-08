@@ -51,7 +51,23 @@ class CustomerController{
       });
 
     } catch (err) {
-      return response.status(400).json({ error: err.message })
+      return response.status(400).json({ error: err.message });
+    }
+  }
+
+  async getServices(request: Request, response: Response){
+    try {
+      const { id } = request.params;
+      const service = new ProviderService();
+      
+      const services = await service.findServicesProvider(id);
+
+      return response.status(200).json({
+        message: "Services found!",
+        data: services
+      });
+    } catch (err) {
+      return response.status(400).json({ error: err.message });
     }
   }
 
