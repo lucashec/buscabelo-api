@@ -2,19 +2,15 @@ module.exports = {
    "type": "postgres",
    "url": process.env.DATABASE_URL,
    "synchronize": true,
+   "ssl": true,
+   "entities": ["src/app/models/*.ts"],
+   "migrations": ["src/database/migrations/*.ts"],
+   "cli": {
+      "migrationsDir": "src/database/migrations"
+   },
    "extra": {
       "ssl": {
          rejectUnauthorized: false,
       }
-   },
-   "ssl": true,
-   "entities": [
-      "dist/src/app/models/*.js"
-   ],
-   "migrations": [
-      "dist/src/database/migrations/*.js"
-   ],
-   "cli": {
-      "migrationsDir": "src/database/migrations"
    }
 }

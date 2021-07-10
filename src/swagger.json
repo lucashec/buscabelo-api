@@ -253,6 +253,37 @@
         }
       }
     },
+    "/providers/{id}/services": {
+      "get": {
+        "summary": "Busca de uma lista de serviceos de um estabelecimento pelo id.",
+        "description": "Busca de uma lista de serviceos de um estabelecimento pelo id.",
+        "tags": ["Providers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do estabelecimento.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Service" }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/providers/search": {
       "get": {
         "summary": "Busca de um estabelecimento pelo nome.",
