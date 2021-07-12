@@ -2,6 +2,7 @@ import { hash } from 'bcryptjs';
 import {getRepository} from 'typeorm'
 
 import Customer from '../models/Customer';
+import Appointment from '../models/Appointment';
 import IUser from '../interface/IUser';
 
 export default class CustomerService {
@@ -37,5 +38,17 @@ export default class CustomerService {
     customer.password = '';
     
     return customer;
+  }
+
+  public async findAppointmentsCustomer(id: string): Promise<Appointment[]> {
+    const repository = getRepository(Appointment);
+
+    const appointments = await repository.find({customer: { id: id}});
+
+    if(!appointments) {
+      throw new Error ('no services found!');
+    }
+
+    return appointments;
   }
 }

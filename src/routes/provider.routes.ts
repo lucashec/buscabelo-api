@@ -1,13 +1,22 @@
 import {Router} from 'express';
-
+import multer from 'multer';
+import UserController from '../app/controllers/UserController';
+import uploadingConfig from '../config/upload';
 import ProviderController from '../app/controllers/ProviderController';
+import EnsureAuthenticated from '../middlewares/ensureAuthenticated';
 
-const route = Router();
+const providerRouter = Router();
+const upload =  multer(uploadingConfig);
 
-route.get('/:id/services', ProviderController.getServices);
-route.get('/:id', ProviderController.getById);
-route.get('/search', ProviderController.filterName);
-route.get('/', ProviderController.getAll);
-route.post('/', ProviderController.create);
+providerRouter.get('/:id/services', ProviderController.getServices);
+providerRouter.get('/:id/appointments', ProviderController.getAppointments);
+providerRouter.get('/:id', ProviderController.getById);
+providerRouter.get('/search', ProviderController.filterName);
+providerRouter.get('/', ProviderController.getAll);
+providerRouter.post('/', ProviderController.create);
+providerRouter.patch('/avatar',
+EnsureAuthenticated,
+upload.single('avatar'),
+UserController.UpdateAvatar);
 
-export default route;
+export default providerRouter;

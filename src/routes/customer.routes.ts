@@ -10,6 +10,7 @@ const upload =  multer(uploadingConfig);
 
 customerRouter.post('/', CustomerController.create);
 customerRouter.get('/', CustomerController.getAll);
+customerRouter.get('/:id/appointments', CustomerController.getAppointments);
 customerRouter.patch('/avatar',
 EnsureAuthenticated,
 upload.single('avatar'),
