@@ -169,6 +169,37 @@
         }
       }
     },
+    "/customers/{id}/appointments": {
+      "get": {
+        "summary": "Busca de uma lista de agendamentos de um consumidor pelo id.",
+        "description": "Busca de uma lista de agendamentos de um consumidor pelo id.",
+        "tags": ["Customers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do consumidor.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Appointment" }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/providers": {
       "get": {
         "summary": "Busca lista de estabelecimentos.",
@@ -274,6 +305,37 @@
                 "schema": {
                   "type": "array",
                   "items": { "$ref": "#/components/schemas/Service" }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/providers/{id}/appointments": {
+      "get": {
+        "summary": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
+        "description": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
+        "tags": ["Providers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do estabelecimento.",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Appointment" }
                 }
               }
             }
