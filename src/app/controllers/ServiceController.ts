@@ -36,8 +36,17 @@ class ServiceController {
       const service = await customerService.findOne(Number(id))
 
       return response.status(200).json({
-        message: "Service found!",
-        data: service
+        service: {
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
+          }
+        }
       });
 
     } catch (err) {
@@ -51,12 +60,22 @@ class ServiceController {
       
       const customerService = new CreateServiceHelper();
 
-      const service = await customerService.filterName(name);
+      const services = await customerService.filterName(name);
 
-      return response.status(200).json({
-        message: "Services found!",
-        data: service
-      });
+      return response.status(200).json(services.map(service => ({
+        service: {
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
+          }
+        }
+      })));
+      
 
     } catch (err) {
       return response.status(400).json({ error: err.message })
@@ -75,11 +94,21 @@ class ServiceController {
         value,
         provider,
       });
-
+      
       return response.status(200).json({
-        message: "service Created!",
-        data: service
+        service: {
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
+          }
+        }
       });
+      
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
@@ -99,7 +128,7 @@ class ServiceController {
         value,
         provider,
       });
-
+      
       return response.status(200).json({
         message: "Updated service!",
         data: service
