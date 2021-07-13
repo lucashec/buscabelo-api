@@ -29,7 +29,7 @@ export default class Service{
   })
   type: Type;
   
-  @ManyToOne(() => Provider, provider => provider.services)
+  @ManyToOne(type => Provider, provider => provider.services, {eager: true})
   provider: Provider
 
   @OneToMany(() => Image, image => image.service)

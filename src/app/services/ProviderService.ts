@@ -4,6 +4,7 @@ import { getRepository, Like } from 'typeorm';
 import Provider from '../models/Provider';
 import IUser from '../interface/IUser';
 import Service from '../models/Service';
+import Appointment from '../models/Appointment';
 
 export default class ProviderService {
 
@@ -51,6 +52,19 @@ export default class ProviderService {
 
     return services;
   }
+
+  public async findAppointmentsProvider(id: string): Promise<Appointment[]> {
+    const repository = getRepository(Appointment);
+
+    const appointments = await repository.find({provider: { id: id}});
+
+    if(!appointments) {
+      throw new Error ('no services found!');
+    }
+
+    return appointments;
+  }
+
 
   public async execute(newProvider: IUser): Promise<Provider> {
 
