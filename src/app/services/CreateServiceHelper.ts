@@ -1,4 +1,4 @@
-import {getRepository, Like} from 'typeorm'
+import {getRepository, ILike} from 'typeorm'
 
 import Customer from '../models/Customer';
 import Provider from '../models/Provider';
@@ -38,10 +38,10 @@ export default class CreateServiceHelper{
     if(name == "") throw new Error ('Nenhuma informação enviada!');
 
     const repository = getRepository(Service);
-    
+
     const services = await repository.find({
-      name: Like(`%${name}%`)
-    });
+      name: ILike(`%${name}%`)
+    })
 
     if(!services || services.length == 0) {
       throw new Error ('Serviços não informados');

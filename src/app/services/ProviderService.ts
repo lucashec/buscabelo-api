@@ -1,5 +1,5 @@
 import { hash } from 'bcryptjs';
-import { getRepository, Like } from 'typeorm';
+import { getRepository, ILike } from 'typeorm';
 
 import Provider from '../models/Provider';
 import IUser from '../interface/IUser';
@@ -33,9 +33,9 @@ export default class ProviderService {
     if(name == "") throw new Error ('Nenhuma informação enviada!');
 
     const repository = getRepository(Provider);
-    
+
     const providers = await repository.find({
-      name: Like(`%${name}%`)
+      name: ILike(`%${name}%`)
     });
 
     return providers;

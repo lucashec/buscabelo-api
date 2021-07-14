@@ -27,7 +27,7 @@ class ProviderController{
       const providerService = new ProviderService();
 
       const providers = await providerService.filterName(name);
-
+      console.log(providers);
       return response.status(200).json({
         message: "Providers found!",
         data: providers
