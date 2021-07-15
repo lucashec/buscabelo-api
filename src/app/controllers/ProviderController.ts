@@ -6,14 +6,21 @@ class ProviderController{
 
   async getAll(request: Request, response: Response){
     try{
-      const service = new ProviderService();
+      const providerService = new ProviderService();
 
-      const providers = await service.find()
+      const providers = await providerService.find()
 
-      return response.status(200).json({
-        message: "Providers found!",
-        data: providers
-      });
+      return response.status(200).json(providers.map(
+        provider => (
+          {provider:{
+            name: provider.name,
+            address: provider.address,
+            description: provider.description,
+            email: provider.email,
+            rating: provider.rating_average
+          }}
+        )
+      ));
 
     }catch(err){
       return response.status(400).json({error : err.message});
@@ -27,11 +34,18 @@ class ProviderController{
       const providerService = new ProviderService();
 
       const providers = await providerService.filterName(name);
-      console.log(providers);
-      return response.status(200).json({
-        message: "Providers found!",
-        data: providers
-      });
+      
+      return response.status(200).json(providers.map(
+        provider => (
+          {provider:{
+            name: provider.name,
+            address: provider.address,
+            description: provider.description,
+            email: provider.email,
+            rating: provider.rating_average
+          }}
+        )
+      ));
 
     } catch (err) {
       return response.status(400).json({ error: err.message })
@@ -41,13 +55,18 @@ class ProviderController{
   async getById(request: Request, response: Response) {
     try {
       const { id } = request.params;
-      const customerService = new ProviderService();
+      const providerService = new ProviderService();
 
-      const service = await customerService.findOne(id)
+      const provider = await providerService.findOne(id)
 
       return response.status(200).json({
-        message: "Service found!",
-        data: service
+        provider:{
+          name: provider.name,
+          address: provider.address,
+          description: provider.description,
+          email: provider.email,
+          rating: provider.rating_average
+        }
       });
 
     } catch (err) {
@@ -58,14 +77,31 @@ class ProviderController{
   async getServices(request: Request, response: Response){
     try {
       const { id } = request.params;
-      const service = new ProviderService();
+      const providerService = new ProviderService();
       
-      const services = await service.findServicesProvider(id);
+      const services = await providerService.findServicesProvider(id);
 
-      return response.status(200).json({
-        message: "Services found!",
-        data: services
-      });
+      return response.status(200).json(services.map(
+        service => (
+          { 
+            service:{
+            id: service.id,
+            name: service.name,
+            description: service.description,
+            value: service.value,
+            type: service.type,
+            provider:{
+            name: service.provider.name,
+            address: service.provider.address,
+            description: service.provider.description,
+            email: service.provider.email,
+            rating: service.provider.rating_average
+          }
+        }
+      }
+        )
+      ));
+      
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
