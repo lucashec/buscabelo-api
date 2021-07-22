@@ -8,10 +8,10 @@ import EnsureAuthenticated from '../middlewares/ensureAuthenticated';
 const providerRouter = Router();
 const upload =  multer(uploadingConfig);
 
+providerRouter.get('/search', ProviderController.filterName);
 providerRouter.get('/:id/services', ProviderController.getServices);
 providerRouter.get('/:id/appointments', ProviderController.getAppointments);
 providerRouter.get('/:id', ProviderController.getById);
-providerRouter.get('/search', ProviderController.filterName);
 providerRouter.get('/', ProviderController.getAll);
 providerRouter.post('/', ProviderController.create);
 providerRouter.patch('/avatar',

@@ -11,12 +11,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/v1",
-      "description": "Dev API"
-    },
-    {
       "url": "https://buscabelo-api.herokuapp.com/v1",
       "description": "Prod API"
+    },
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Dev API"
     }
   ],
   "paths": {
@@ -200,6 +200,43 @@
         }
       }
     },
+    "/customers/avatar": {
+      "patch": {
+        "summary": "Atualização de um avatar no consumidor",
+        "description": "Rota responsável pela mudança de um avatar no consumidor.",
+        "tags": ["Customers"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Image"
+              },
+              "example": {
+                  "url": "imagens/image.jpg"
+                }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Image"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/providers": {
       "get": {
         "summary": "Busca lista de estabelecimentos.",
@@ -367,6 +404,43 @@
                 "schema": {
                   "type": "array",
                   "items": {"$ref": "#/components/schemas/Provider"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/provider/avatar": {
+      "patch": {
+        "summary": "Atualização de um avatar no provider",
+        "description": "Rota responsável pela mudança de um avatar no provider.",
+        "tags": ["Providers"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Image"
+              },
+              "example": {
+                  "url": "imagens/image.jpg"
+                }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Image"
                 }
               }
             }
@@ -614,6 +688,12 @@
           "appointment_to": {
             "type": "string"
           },
+          "time_done_at": {
+            "type": "string"
+          },
+          "canceled_at": {
+            "type": "string"
+          },
           "provider": {
             "type": "string"
           },
@@ -621,12 +701,6 @@
             "type": "string"
           },
           "service": {
-            "type": "string"
-          },
-          "time_done_at": {
-            "type": "string"
-          },
-          "canceled_at": {
             "type": "string"
           }
         }
@@ -640,10 +714,10 @@
           "name": {
             "type": "string"
           },
-          "password": {
+          "email": {
             "type": "string"
           },
-          "email": {
+          "password": {
             "type": "string"
           },
           "avatar": {
@@ -660,10 +734,10 @@
           "name": {
             "type": "string"
           },
-          "password": {
+          "email": {
             "type": "string"
           },
-          "email": {
+          "password": {
             "type": "string"
           },
           "avatar": {
@@ -707,6 +781,17 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           }
         }

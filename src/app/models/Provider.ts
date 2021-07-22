@@ -1,5 +1,4 @@
 import { ChildEntity, Column, OneToMany } from 'typeorm';
-import Image from './Image';
 import Service from './Service';
 import User from './User';
 
