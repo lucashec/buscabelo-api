@@ -1,7 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+
 import Customer from "./Customer";
 import Provider from "./Provider";
 import Service from "./Service";
+import Rating from './Rating';
 
 @Entity()
 export default class Appointment{
@@ -34,4 +36,8 @@ export default class Appointment{
 
   @ManyToOne(type => Service, {eager: true})
   service: Service;
+
+  @ManyToOne(type => Rating, {eager: true})
+  @JoinColumn()
+  rating: Rating;
 }
