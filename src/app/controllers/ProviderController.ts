@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
 import ProviderService from '../services/ProviderService';
+import CustomerService from '../services/CustomerService';
+import SessionService from '../services/SessionService';
 
 class ProviderController{
 
@@ -165,6 +167,35 @@ class ProviderController{
       return response.status(400).json({error : err.message});
     }
   }
-}
+
+  async googleSignIn(request: Request, response: Response){
+    const {name, email} = request.body;
+    const customerService =  new CustomerService();
+    const providerService =  new ProviderService();
+    const sessionService = new SessionService();
+    const currentUser = { email, password: ''};
+
+    if(!customerService.checkEmail(email)){
+      try{
+         const provider = await providerService.execute({
+          name,
+          email,
+          password: ''
+        });
+        currentUser.email = provider.email
+  
+        return response.status(200).json({
+          message: "Customer Created!",
+          data: provider
+        });
+      } catch (err){
+        return response.status(400).json({error : err.message});
+      }  
+
+    }
+    sessionService.execute(currentUser); 
+    }
+    
+  }
 
 export default new ProviderController();

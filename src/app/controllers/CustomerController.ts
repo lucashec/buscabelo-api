@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import customerRouter from '../../routes/customer.routes';
 
 import CustomerService from '../services/CustomerService';
+import SessionService from '../services/SessionService';
 
 class CustomerController{
 
@@ -40,7 +42,6 @@ class CustomerController{
       return response.status(400).json({error : err.message});
     }
   }
-
   async getAppointments(request: Request, response: Response){
     try {
       const { id } = request.params;
@@ -77,6 +78,34 @@ class CustomerController{
       return response.status(400).json({ error: err.message });
     }
   }
+
+  async googleSignIn(request: Request, response: Response){
+    const {name, email} = request.body;
+    const customerService =  new CustomerService();
+    const sessionService = new SessionService();
+    const currentUser = { email, password: ''};
+
+    if(!customerService.checkEmail(email)){
+      try{
+         const customer = await customerService.execute({
+          name,
+          email,
+          password: ''
+        });
+        currentUser.email = customer.email
+  
+        return response.status(200).json({
+          message: "Customer Created!",
+          data: customer
+        });
+      } catch (err){
+        return response.status(400).json({error : err.message});
+      }  
+
+    }
+    sessionService.execute(currentUser); 
+    }
+
 }
 
 export default new CustomerController();

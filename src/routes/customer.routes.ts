@@ -9,6 +9,7 @@ const customerRouter = Router();
 const upload =  multer(uploadingConfig);
 
 customerRouter.post('/', CustomerController.create);
+customerRouter.post('/googleAuth', CustomerController.googleSignIn);
 customerRouter.get('/', CustomerController.getAll);
 customerRouter.get('/:id/appointments', CustomerController.getAppointments);
 customerRouter.patch('/avatar',

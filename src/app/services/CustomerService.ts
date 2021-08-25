@@ -14,7 +14,24 @@ export default class CustomerService {
 
     return users;
   }
+  public async checkEmail(userEmail: string): Promise<Boolean> {
+    const repository = getRepository(Customer);
+    
+    const checkcustomerExists =  await repository.findOne({
+      where: {email:userEmail},
+    });
 
+    if (checkcustomerExists){return true}
+    return false;
+  }
+  public async getPassword(currentEmail:string): Promise<String>{
+    const repository = getRepository(Customer);
+    
+    const currentUser =  await repository.findOne({
+      where: {email: currentEmail},
+    });
+    return currentUser!.password;
+  }
   public async execute(newCustomer: IUser): Promise<Customer> {
 
     const repository = getRepository(Customer);
@@ -23,7 +40,7 @@ export default class CustomerService {
       where: {email:newCustomer.email},
     });
 
-    if (checkcustomerExists){
+    if (this.checkEmail(newCustomer.email)){
       throw new Error ('Email address already used');
     }
     const hashedPassword = await hash(newCustomer.password, 8);
@@ -51,4 +68,5 @@ export default class CustomerService {
 
     return appointments;
   }
+
 }
