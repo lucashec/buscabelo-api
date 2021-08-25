@@ -12,12 +12,16 @@ class AppointmentController{
       const appointments = await service.find()
 
       return response.status(200).json({
+        success: true,
         message: "appointments found!",
-        data: appointments
+        appointments: appointments
       });
 
     }catch(err){
-      return response.status(400).json({error : err.message});
+      return response.status(400).json({
+        success: false,
+        message : err.message
+      });
     }
   }
   
