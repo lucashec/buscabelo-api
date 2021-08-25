@@ -4,7 +4,6 @@ import {parseISO, format} from 'date-fns';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
 class AppointmentController{  
-
   async getAll(request: Request, response: Response){
     try{
       const service = new CreateAppointmentService();
@@ -13,7 +12,6 @@ class AppointmentController{
 
       return response.status(200).json({
         success: true,
-        message: "appointments found!",
         appointments: appointments
       });
 
@@ -33,7 +31,7 @@ class AppointmentController{
       const appointment = await appoinmentService.findOne(Number(id));
       
       return response.status(200).json({
-        message: "Appointments found!",
+        success: true,
         appointment:{
           id:appointment?.id,
           scheduled_at: appointment?.scheduled_at,
@@ -53,7 +51,7 @@ class AppointmentController{
             name: appointment?.service.description,
             value: appointment?.service.value,
           }
-        },
+        }
       });
 
     } catch (err) {
@@ -83,9 +81,34 @@ class AppointmentController{
         service,
         scheduled_at: timeNowParsed,
       })
-      return response.json(appointment);
+      return response.json({
+        success: true,
+        appointment:{
+          id:appointment?.id,
+          scheduled_at: appointment?.scheduled_at,
+          appointment_to: appointment?.appointment_to,
+          time_done_at: appointment?.time_done_at,
+          canceled_at: appointment?.canceled_at,
+          provider:{
+            id: appointment?.provider.id,
+            name: appointment?.provider.name,
+          },
+          customer:{
+            id: appointment?.customer.id,
+            name: appointment?.customer.name,
+          },
+          service:{
+            id: appointment?.service.id,
+            name: appointment?.service.description,
+            value: appointment?.service.value,
+          }
+        }
+      });
     } catch(err){
-      return response.status(400).json({error: err.message});
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
     }
     
   } 
