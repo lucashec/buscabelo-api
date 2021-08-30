@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import {parseISO, format} from 'date-fns';
+import {parseISO, format, addMinutes} from 'date-fns';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
+import isBefore from 'date-fns/isBefore';
 
 class AppointmentController{  
 
@@ -66,9 +67,12 @@ class AppointmentController{
         service, 
       } = request.body;
       
-      const timeNow = format(new Date, 'yyyy-MM-dd');
-      const timeNowParsed = parseISO(timeNow);
+      const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd'));
       const parsedDate = parseISO(appointment_to); 
+
+      if(isBefore(parsedDate, timeNowParsed)){
+        throw new Error ('The data must be later than this');
+      }
     
       const createAppointment = new CreateAppointmentService();
 
