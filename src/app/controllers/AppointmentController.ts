@@ -73,6 +73,9 @@ class AppointmentController{
       if(isBefore(parsedDate, timeNowParsed)){
         throw new Error ('The data must be later than this');
       }
+      if(provider === customer){
+        throw new Error ('Users must be distinct');
+      }
     
       const createAppointment = new CreateAppointmentService();
 
