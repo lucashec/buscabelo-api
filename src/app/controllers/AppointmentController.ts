@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import {parseISO, format, addHours} from 'date-fns';
+import {parseISO, format, addHours, isBefore} from 'date-fns';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
-import isBefore from 'date-fns/isBefore';
+
 
 class AppointmentController{  
   async getAll(request: Request, response: Response){
@@ -10,10 +10,18 @@ class AppointmentController{
       const service = new CreateAppointmentService();
 
       const appointments = await service.find()
+      const filteredAppointments = [];
+      const dateNow =  new Date();
+
+      for(let appointment of appointments){
+        if (isBefore(appointment.appointment_to, dateNow)){
+          filteredAppointments.push(appointment);
+        }
+      }
 
       return response.status(200).json({
         success: true,
-        appointments: appointments
+        appointments: filteredAppointments
       });
 
     }catch(err){
