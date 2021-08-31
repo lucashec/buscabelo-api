@@ -81,6 +81,102 @@
         }
       }
     },
+    "/appointments/cancel/{id}": {
+      "patch": {
+        "summary": "Rota para cancelar um agendamento",
+        "description": "Rota para cancelar um agendamento",
+        "tags": ["Appointments"],
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Appointment ID.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Appointment"
+              },
+              "example": {
+                "canceled_at": "2021-08-31T13:52:07.245Z"
+                }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Appointment"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/appointments/finish/{id}": {
+      "patch": {
+        "summary": "Rota para finalizar um agendamento",
+        "description": "Rota para finalizar um agendamento",
+        "tags": ["Appointments"],
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Appointment ID.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Appointment"
+              },
+              "example": {
+                "time_done_at": "2021-08-31T13:52:07.245Z"
+                }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Appointment"}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/appointments/{id}":{
       "get":{
         "summary": "Filtra um agendamento por um id específico",
