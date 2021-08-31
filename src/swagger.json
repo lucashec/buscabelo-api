@@ -12,11 +12,7 @@
   "servers": [
     {
       "url": "https://buscabelo-api.herokuapp.com/v1",
-      "description": "Produção"
-    },
-    {
-      "url": "http://localhost:3000/v1",
-      "description": "Desenvolvimento"
+      "description": "heroku API"
     }
   ],
   "paths": {
