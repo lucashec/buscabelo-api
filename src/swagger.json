@@ -12,11 +12,11 @@
   "servers": [
     {
       "url": "https://buscabelo-api.herokuapp.com/v1",
-      "description": "Prod API"
+      "description": "Produção"
     },
     {
       "url": "http://localhost:3000/v1",
-      "description": "Dev API"
+      "description": "Desenvolvimento"
     }
   ],
   "paths": {
@@ -26,14 +26,14 @@
         "description": "Busca lista de agendamentos cadastrados.",
         "tags": ["Appointments"],
         "security": [{"bearerAuth": []}],
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {"$ref": "#/components/schemas/Appointment"}
+                  "type": "object",
+                  "$ref": "#/components/schemas/Appointments"
                 }
               }
             }
@@ -55,7 +55,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Appointment"
+                "$ref": "#/components/schemas/AppointmentRequest"
               }
             }
           }
@@ -87,35 +87,39 @@
         "description": "Rota para cancelar um agendamento",
         "tags": ["Appointments"],
         "security": [{"bearerAuth": []}],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Appointment ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Appointment ID.",
+          "required": true
+        }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "$ref": "#/components/schemas/Appointment"
+                "properties": {
+                  "canceled_at": {
+                    "type": "string"
+                  }
+                }
               },
               "example": {
                 "canceled_at": "2021-08-31T13:52:07.245Z"
-                }
+              }
             }
           }
         },
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {"$ref": "#/components/schemas/Appointment"}
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
                 }
               }
             }
@@ -135,24 +139,26 @@
         "description": "Rota para finalizar um agendamento",
         "tags": ["Appointments"],
         "security": [{"bearerAuth": []}],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Appointment ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Appointment ID.",
+          "required": true
+        }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "$ref": "#/components/schemas/Appointment"
+                "properties": {
+                  "time_done_at": {
+                    "type": "string"
+                  }
+                }
               },
               "example": {
                 "time_done_at": "2021-08-31T13:52:07.245Z"
-                }
+              }
             }
           }
         },
@@ -163,7 +169,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {"$ref": "#/components/schemas/Appointment"}
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
                 }
               }
             }
@@ -177,41 +185,41 @@
         }
       }
     },
-    "/appointments/{id}":{
-      "get":{
+    "/appointments/{id}": {
+      "get": {
         "summary": "Filtra um agendamento por um id específico",
         "description": "Filtra um agendamento por um id específico",
         "tags": ["Appointments"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Detalhes do Agendamento pelo Id",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Detalhes do Agendamento pelo Id",
+          "required": true
+        }],
         "security": [{"bearerAuth": []}],
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                 "type": "array",
-                "items": {"$ref": "#/components/schemas/Appointment"}
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
     },
-        "400": {
-          "description": "Bad Request"
-    },
-        "401": {
-          "description": "Unauthorized"
-    }
-      }
-    }
-      },
     "/customers": {
       "get": {
         "summary": "Busca lista de consumidores.",
@@ -224,7 +232,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {"$ref": "#/components/schemas/Customer"}
+                  "items": {
+                    "$ref": "#/components/schemas/Customers"
+                  }
                 }
               }
             }
@@ -242,7 +252,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Customer"
+                "$ref": "#/components/schemas/CustomerRequest"
               }
             }
           }
@@ -285,7 +295,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Appointment" }
+                  "items": {
+                    "$ref": "#/components/schemas/Appointments"
+                  }
                 }
               }
             }
@@ -310,8 +322,8 @@
                 "$ref": "#/components/schemas/Image"
               },
               "example": {
-                  "url": "imagens/image.jpg"
-                }
+                "url": "imagens/image.jpg"
+              }
             }
           }
         },
@@ -345,7 +357,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {"$ref": "#/components/schemas/Provider"}
+                  "items": {
+                    "$ref": "#/components/schemas/Providers"
+                  }
                 }
               }
             }
@@ -363,7 +377,8 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Provider"
+                "type": "object",
+                "$ref": "#/components/schemas/ProviderRequest"
               }
             }
           }
@@ -391,14 +406,12 @@
         "summary": "Busca de um estabelecimento pelo id.",
         "description": "Busca de um estabelecimento pelo id.",
         "tags": ["Providers"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Nome do estabelecimento pelo ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Nome do estabelecimento pelo ID.",
+          "required": true
+        }],
         "responses":{
           "200": {
             "description": "OK",
@@ -430,14 +443,16 @@
             "required": true
           }
         ],
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Service" }
+                  "items": {
+                    "$ref": "#/components/schemas/Services"
+                  }
                 }
               }
             }
@@ -453,14 +468,12 @@
         "summary": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
         "description": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
         "tags": ["Providers"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id do estabelecimento.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "id do estabelecimento.",
+          "required": true
+        }],
         "responses":{
           "200": {
             "description": "OK",
@@ -468,7 +481,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Appointment" }
+                  "items": {
+                    "$ref": "#/components/schemas/Appointments"
+                  }
                 }
               }
             }
@@ -484,22 +499,20 @@
         "summary": "Busca de um estabelecimento pelo nome.",
         "description": "Busca de um estabelecimento pelo nome.",
         "tags": ["Providers"],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "description": "Nome do estabelecimento para busca.",
-            "required": true
-          }
-        ],
-        "responses":{
+        "parameters": [{
+          "name": "name",
+          "in": "query",
+          "description": "Nome do estabelecimento para busca.",
+          "required": true
+        }],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {"$ref": "#/components/schemas/Provider"}
+                  "type": "object",
+                  "$ref": "#/components/schemas/Providers"
                 }
               }
             }
@@ -524,8 +537,8 @@
                 "$ref": "#/components/schemas/Image"
               },
               "example": {
-                  "url": "imagens/image.jpg"
-                }
+                "url": "imagens/image.jpg"
+              }
             }
           }
         },
@@ -553,14 +566,16 @@
         "description": "Busca lista de serviços de um estabelecimento autenticado.",
         "tags": ["Services"],
         "security": [{"bearerAuth": []}],
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "items": {"$ref": "#/components/schemas/Service"}
+                  "items": {
+                    "$ref": "#/components/schemas/Services"
+                  }
                 }
               }
             }
@@ -582,7 +597,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Service"
+                "$ref": "#/components/schemas/ServiceRequest"
               }
             }
           }
@@ -613,14 +628,12 @@
         "summary": "Busca de um serviço pelo id.",
         "description": "Busca de um serviço pelo id.",
         "tags": ["Services"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Nome do serviço pelo ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Nome do serviço pelo ID.",
+          "required": true
+        }],
         "responses":{
           "200": {
             "description": "OK",
@@ -643,19 +656,17 @@
         "description": "Atualizar o serviço pelo id.",
         "tags": ["Services"],
         "security": [{"bearerAuth": []}],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Atualizar o serviço pelo ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "Atualizar o serviço pelo ID.",
+          "required": true
+        }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Service"
+                "$ref": "#/components/schemas/ServiceRequest"
               }
             }
           }
@@ -685,14 +696,12 @@
         "description": "deletar o serviço pelo id.",
         "tags": ["Services"],
         "security": [{"bearerAuth": []}],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "deletar o serviço pelo ID.",
-            "required": true
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "deletar o serviço pelo ID.",
+          "required": true
+        }],
         "responses":{
           "200": {
             "description": "OK"
@@ -711,22 +720,20 @@
         "summary": "Busca de um serviço pelo nome.",
         "description": "Busca de um serviço pelo nome.",
         "tags": ["Services"],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "description": "Nome do serviço para busca.",
-            "required": true
-          }
-        ],
-        "responses":{
+        "parameters": [{
+          "name": "name",
+          "in": "query",
+          "description": "Nome do serviço para busca.",
+          "required": true
+        }],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {"$ref": "#/components/schemas/Service"}
+                  "type": "object",
+                  "$ref": "#/components/schemas/Services"
                 }
               }
             }
@@ -746,7 +753,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Session"
+                "$ref": "#/components/schemas/SessionRequest"
               }
             }
           }
@@ -758,7 +765,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/Session"
+                  "$ref": "#/components/schemas/SessionResponse"
                 }
               }
             }
@@ -772,12 +779,9 @@
   },
   "components": {
     "schemas": {
-      "Appointment": {
+      "AppointmentRequest": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "scheduled_at": {
             "type": "string"
           },
@@ -797,16 +801,199 @@
             "type": "string"
           },
           "service": {
+            "type": "number"
+          }
+        }
+      },
+      "Appointments": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "appointments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "scheduled_at": {
+                  "type": "string"
+                },
+                "appointment_to": {
+                  "type": "string"
+                },
+                "time_done_at": {
+                  "type": "string"
+                },
+                "canceled_at": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "appointment": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "scheduled_at": {
+                "type": "string"
+              },
+              "appointment_to": {
+                "type": "string"
+              },
+              "time_done_at": {
+                "type": "string"
+              },
+              "canceled_at": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "customer": {
+                "type": "string"
+              },
+              "service": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      },
+      "Customers": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "customers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomerRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
             "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
       "Customer": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
+          "success": {
+            "type": "boolean"
           },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "Providers": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "email": {
+                  "type": "string"
+                },
+                "rating": {
+                  "type": "number",
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProviderRequest": {
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -816,46 +1003,100 @@
           "password": {
             "type": "string"
           },
-          "avatar": {
-            "type": "string"
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
       "Provider": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
+          "success": {
+            "type": "boolean"
           },
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "avatar": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "rating_average": {
-            "type": "number"
+          "provider": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string",
+                "nullable": true
+              },
+              "description": {
+                "type": "string",
+                "nullable": true
+              },
+              "address": {
+                "type": "string",
+                "nullable": true
+              },
+              "rating_average": {
+                "type": "number",
+                "nullable": true
+              }
+            }
           }
         }
       },
-      "Service": {
+      "Services": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
+          "success": {
+            "type": "boolean"
           },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "value": {
+                  "type": "number"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceRequest": {
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -870,7 +1111,43 @@
           }
         }
       },
-      "Session": {
+      "Service": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "service": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "provider": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionRequest": {
         "type": "object",
         "properties": {
           "email": {
@@ -878,6 +1155,31 @@
           },
           "password": {
             "type": "string"
+          }
+        }
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
           }
         }
       },
