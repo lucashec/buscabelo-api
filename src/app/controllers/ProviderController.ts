@@ -13,6 +13,7 @@ class ProviderController {
         success: true,
         providers: providers.map(provider => ({
           provider: {
+            id: provider.id,
             name: provider.name,
             address: provider.address,
             description: provider.description,

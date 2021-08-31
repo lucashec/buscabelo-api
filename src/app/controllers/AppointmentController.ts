@@ -11,7 +11,7 @@ class AppointmentController{
 
       const appointments = await service.find()
       const filteredAppointments = [];
-      const dateNow =  new Date();
+      const dateNow =  parseISO(format(new Date, 'YYYY-mm-DD HH'));
 
       for(let appointment of appointments){
         if (isBefore(appointment.appointment_to, dateNow)){
@@ -67,6 +67,7 @@ class AppointmentController{
       return response.status(400).json({ error: err.message })
     }
   }
+
   async update(request: Request, response: Response){
     const path = request.path
     try {
@@ -77,7 +78,7 @@ class AppointmentController{
       //const currentAppointmet = await appointmentService.findOne(Number(id));
 
       if (path.includes('cancel')){
-        const appointment = appointmentService.update(Number(id), {
+        const appointment = await appointmentService.update(Number(id), {
           canceled_at,
         })
          return response.status(200).json({
@@ -109,6 +110,7 @@ class AppointmentController{
       });
     }
   } 
+
   async create(request: Request, response: Response){
     try{
       const {
