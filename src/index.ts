@@ -21,4 +21,4 @@ app.use("/api-doc", SwaggerUi.serve, SwaggerUi.setup(swaggerDocs));
 app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
-app.listen(process.env.PORT || 3000, () => console.log('Server started at http://localhost:3000/v1'));
+app.listen(process.env.PORT || 3000, () => console.log('Server started at http://localhost:3000/v1 or http://localhost:3000/api-doc'));

@@ -1,10 +1,17 @@
-// import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import Customer from "./Customer";
 
-// @Entity()
-// export default class Rating{
-//   @Column()
-//   description: string;
+@Entity()
+export default class Rating{
+  @PrimaryGeneratedColumn("uuid")
+  id: number;
 
-//   @Column({ type: "float" })
-//   rating_number: number;
-// }
+  @Column({ nullable: true })
+  description: string;
+
+  @Column()
+  rating_number: number;
+
+  @ManyToMany(type => Customer, {eager: true})
+  customer: Customer;
+}
