@@ -1,38 +1,43 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Provider from "./Provider";
-import Image from "./Image";
+import {
+  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+} from 'typeorm';
+import Provider from './Provider';
+import Image from './Image';
+import Appointment from './Appointment';
 
 export enum Type{
-  Haircut = "Corte",
-  Haircare =  "Tratamento",
-  Barb =  "Barba",
-  Default = ""
+  Haircut = 'Corte',
+  Haircare = 'Tratamento',
+  Barb = 'Barba',
+  Default = ''
 }
 @Entity()
-export default class Service{
+export default class Service {
   @PrimaryGeneratedColumn()
   id:number;
-  
+
   @Column()
   name: string;
 
   @Column()
   description: string;
 
-  @Column({ type: "float" })
+  @Column({ type: 'float' })
   value: number;
 
   @Column({
-    type:'enum',
-    enum:Type,
-    default: Type.Default
+    type: 'enum',
+    enum: Type,
+    default: Type.Default,
   })
   type: Type;
-  
-  @ManyToOne(type => Provider, provider => provider.services, {eager: true})
+
+  @ManyToOne((type) => Provider, (provider) => provider.services, { eager: true })
   provider: Provider
 
-  @OneToMany(() => Image, image => image.service)
+  @OneToMany(() => Image, (image) => image.service)
   images: Image [];
-}
 
+  @OneToMany(() => Appointment, (appointment) => appointment.provider)
+  appointments: Appointment[];
+}

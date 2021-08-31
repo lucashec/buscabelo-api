@@ -1,7 +1,9 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+
 import Customer from "./Customer";
 import Provider from "./Provider";
 import Service from "./Service";
+import Rating from './Rating';
 
 @Entity()
 export default class Appointment{
@@ -26,15 +28,16 @@ export default class Appointment{
   })
   canceled_at: Date;
 
-  @OneToOne(type => Provider, {eager: true})
-  @JoinColumn()
+  @ManyToOne(type => Provider, {eager: true})
   provider: Provider;
 
-  @OneToOne(type => Customer, {eager: true})
-  @JoinColumn()
+  @ManyToOne(type => Customer, {eager: true})
   customer: Customer;
 
-  @OneToOne(type => Service, {eager: true})
-  @JoinColumn()
+  @ManyToOne(type => Service, {eager: true})
   service: Service;
+
+  @ManyToOne(type => Rating, {eager: true})
+  @JoinColumn()
+  rating: Rating;
 }

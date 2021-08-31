@@ -71,7 +71,6 @@ export default class CreateServiceHelper{
 
   public async update(id: number, updateService : IService){
     const serviceRepository = getRepository(Service);
-    const customerRepository = getRepository(Customer);
 
     const service = serviceRepository.update(id, updateService);
 
