@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {parseISO, format, addMinutes} from 'date-fns';
+import {parseISO, format, addHours} from 'date-fns';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import isBefore from 'date-fns/isBefore';
@@ -59,7 +59,48 @@ class AppointmentController{
       return response.status(400).json({ error: err.message })
     }
   }
-  
+  async update(request: Request, response: Response){
+    const path = request.path
+    try {
+      const {canceled_at,time_done_at,} = request.body;
+      const { id } = request.params;
+      const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd HH:mm:ss'));
+      const appointmentService = new CreateAppointmentService();
+      //const currentAppointmet = await appointmentService.findOne(Number(id));
+
+      if (path.includes('cancel')){
+        const appointment = appointmentService.update(Number(id), {
+          canceled_at,
+        })
+         return response.status(200).json({
+          success: true,
+          appointment: appointment
+        });
+      } else {
+        // if (currentAppointmet?.canceled_at === null){
+        //   throw new Error ('Appointment is already canceled');
+        // }
+        // if (currentAppointmet?.appointment_to < addHours(timeNowParsed, 1)){
+        //   throw new Error (`It's too earlier to cancel`);
+        // }
+
+        const appointment = appointmentService.update(Number(id), {
+          time_done_at,        
+        })
+         return response.status(200).json({
+          success: true,
+          appointment: appointment
+        });
+      }
+
+      
+    } catch(err){
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  } 
   async create(request: Request, response: Response){
     try{
       const {

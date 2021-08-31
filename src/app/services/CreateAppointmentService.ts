@@ -28,6 +28,13 @@ export default class CreateAppointmentService {
     const appointment = await repository.findOne(id);
     return appointment;
   }
+  public async update(id: number, updateAppointment : any){
+    const appointmentRepository = getRepository(Appointment);
+
+    const appointment = appointmentRepository.update(id, updateAppointment);
+
+    return appointment;
+  }
 
   public async execute({
     provider,

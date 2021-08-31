@@ -150,7 +150,7 @@ class ServiceController {
       return response.status(400).json({
         success: false,
         message: err.message
-      });;
+      });
     }
   }
 
