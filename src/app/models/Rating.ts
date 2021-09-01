@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Appointment from "./Appointment";
 import Customer from "./Customer";
 
 @Entity()
@@ -14,4 +15,7 @@ export default class Rating{
 
   @ManyToMany(type => Customer, {eager: true})
   customer: Customer;
+
+  @OneToMany(() => Appointment, appointment => appointment.rating)
+  appointments: Appointment[];
 }
