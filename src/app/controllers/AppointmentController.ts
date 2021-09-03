@@ -38,7 +38,8 @@ class AppointmentController{
       const appoinmentService = new CreateAppointmentService();
       
       const appointment = await appoinmentService.findOne(Number(id));
-      
+      console.log(appointment);
+    
       return response.status(200).json({
         success: true,
         appointment:{
