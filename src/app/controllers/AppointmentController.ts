@@ -3,7 +3,6 @@ import {parseISO, format, addHours, isBefore} from 'date-fns';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
-
 class AppointmentController{  
   async getAll(request: Request, response: Response){
     try{
@@ -38,7 +37,6 @@ class AppointmentController{
       const appoinmentService = new CreateAppointmentService();
       
       const appointment = await appoinmentService.findOne(Number(id));
-      console.log(appointment);
     
       return response.status(200).json({
         success: true,
