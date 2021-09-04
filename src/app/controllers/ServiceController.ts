@@ -11,16 +11,14 @@ class ServiceController {
       return response.status(200).json({
         success: true,
         services: services.map(service => ({
-          service: {
-            id: service.id,
-            name: service.name,
-            description: service.description,
-            value: service.value,
-            type: service.type,
-            provider: {
-              id: service.provider.id,
-              name: service.provider.name,
-            }
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
           }
         }))
       });
@@ -73,16 +71,14 @@ class ServiceController {
       return response.status(200).json({
         success: true,
         services: services.map(service => ({
-          service: {
-            id: service.id,
-            name: service.name,
-            description: service.description,
-            value: service.value,
-            type: service.type,
-            provider: {
-              id: service.provider.id,
-              name: service.provider.name,
-            }
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
           }
         }))
       });
