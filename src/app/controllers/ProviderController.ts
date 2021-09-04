@@ -126,25 +126,27 @@ class ProviderController {
       return response.status(200).json({
         success: true,
         appointments: appointments.map(appointment => ({
-          id: appointment?.id,
-          scheduled_at: appointment?.scheduled_at,
-          appointment_to: appointment?.appointment_to,
-          time_done_at: appointment?.time_done_at,
-          canceled_at: appointment?.canceled_at,
-          provider: {
-            id: appointment?.provider.id,
-            name: appointment?.provider.name,
-          },
-          customer: {
-            id: appointment?.customer.id,
-            name: appointment?.customer.name,
-          },
-          service: {
-            id: appointment?.service.id,
-            name: appointment?.service.description,
-            value: appointment?.service.value,
-          }
-        }))
+            id: appointment?.id,
+            scheduled_at: appointment?.scheduled_at,
+            appointment_to: appointment?.appointment_to,
+            time_done_at: appointment?.time_done_at,
+            canceled_at: appointment?.canceled_at,
+            provider: {
+              id: appointment?.provider.id,
+              name: appointment?.provider.name,
+            },
+            customer: {
+              id: appointment?.customer.id,
+              name: appointment?.customer.name,
+            },
+            service: {
+              id: appointment?.service.id,
+              name: appointment?.service.description,
+              value: appointment?.service.value,
+            }
+        }
+        )
+        )
       });
     } catch (err) {
       return response.status(400).json({
