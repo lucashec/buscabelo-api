@@ -507,10 +507,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Services"
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/Services"
                 }
               }
             }
