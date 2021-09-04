@@ -3,7 +3,6 @@ import {parseISO, format, addHours, isBefore} from 'date-fns';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
-
 class AppointmentController{  
   async getAll(request: Request, response: Response){
     try{
@@ -11,7 +10,7 @@ class AppointmentController{
 
       const appointments = await service.find()
       const filteredAppointments = [];
-      const dateNow =  parseISO(format(new Date, 'YYYY-mm-DD HH'));
+      const dateNow =  parseISO(format(new Date, 'yyyy-mm-dd HH:ss'));
 
       for(let appointment of appointments){
         if (isBefore(appointment.appointment_to, dateNow)){
@@ -38,7 +37,7 @@ class AppointmentController{
       const appoinmentService = new CreateAppointmentService();
       
       const appointment = await appoinmentService.findOne(Number(id));
-      
+    
       return response.status(200).json({
         success: true,
         appointment:{
@@ -64,7 +63,10 @@ class AppointmentController{
       });
 
     } catch (err) {
-      return response.status(400).json({ error: err.message })
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
     }
   }
 

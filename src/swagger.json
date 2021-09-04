@@ -24,8 +24,14 @@
       "get": {
         "summary": "Busca lista de agendamentos cadastrados.",
         "description": "Busca lista de agendamentos cadastrados.",
-        "tags": ["Appointments"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -49,8 +55,14 @@
       "post": {
         "summary": "Cadastro de agendamento",
         "description": "Rota responsável pelo cadastro de um novo agendamento no sistema.",
-        "tags": ["Appointments"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -85,14 +97,22 @@
       "patch": {
         "summary": "Rota para cancelar um agendamento",
         "description": "Rota para cancelar um agendamento",
-        "tags": ["Appointments"],
-        "security": [{"bearerAuth": []}],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Appointment ID.",
-          "required": true
-        }],
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Appointment ID.",
+            "required": true
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -137,14 +157,22 @@
       "patch": {
         "summary": "Rota para finalizar um agendamento",
         "description": "Rota para finalizar um agendamento",
-        "tags": ["Appointments"],
-        "security": [{"bearerAuth": []}],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Appointment ID.",
-          "required": true
-        }],
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Appointment ID.",
+            "required": true
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -162,7 +190,7 @@
             }
           }
         },
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -189,14 +217,22 @@
       "get": {
         "summary": "Filtra um agendamento por um id específico",
         "description": "Filtra um agendamento por um id específico",
-        "tags": ["Appointments"],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Detalhes do Agendamento pelo Id",
-          "required": true
-        }],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Appointments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Detalhes do Agendamento pelo Id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -224,8 +260,10 @@
       "get": {
         "summary": "Busca lista de consumidores.",
         "description": "Busca lista de consumidores.",
-        "tags": ["Customers"],
-        "responses":{
+        "tags": [
+          "Customers"
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -247,7 +285,9 @@
       "post": {
         "summary": "Cadastro de consumidor",
         "description": "Rota responsável pelo cadastro de um novo consumidor no sistema.",
-        "tags": ["Customers"],
+        "tags": [
+          "Customers"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -279,7 +319,9 @@
       "get": {
         "summary": "Busca de uma lista de agendamentos de um consumidor pelo id.",
         "description": "Busca de uma lista de agendamentos de um consumidor pelo id.",
-        "tags": ["Customers"],
+        "tags": [
+          "Customers"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -288,7 +330,7 @@
             "required": true
           }
         ],
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -312,8 +354,14 @@
       "patch": {
         "summary": "Atualização de um avatar no consumidor",
         "description": "Rota responsável pela mudança de um avatar no consumidor.",
-        "tags": ["Customers"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -349,8 +397,10 @@
       "get": {
         "summary": "Busca lista de estabelecimentos.",
         "description": "Busca lista de estabelecimentos.",
-        "tags": ["Providers"],
-        "responses":{
+        "tags": [
+          "Providers"
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -372,7 +422,9 @@
       "post": {
         "summary": "Cadastro de estabelecimento",
         "description": "Rota responsável pelo cadastro de um novo estabelecimento no sistema.",
-        "tags": ["Providers"],
+        "tags": [
+          "Providers"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -405,14 +457,18 @@
       "get": {
         "summary": "Busca de um estabelecimento pelo id.",
         "description": "Busca de um estabelecimento pelo id.",
-        "tags": ["Providers"],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Nome do estabelecimento pelo ID.",
-          "required": true
-        }],
-        "responses":{
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do estabelecimento pelo ID.",
+            "required": true
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -434,7 +490,9 @@
       "get": {
         "summary": "Busca de uma lista de serviceos de um estabelecimento pelo id.",
         "description": "Busca de uma lista de serviceos de um estabelecimento pelo id.",
-        "tags": ["Providers"],
+        "tags": [
+          "Providers"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -449,10 +507,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Services"
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/Services"
                 }
               }
             }
@@ -467,14 +523,18 @@
       "get": {
         "summary": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
         "description": "Busca de uma lista de agendamentos de um estabelecimento pelo id.",
-        "tags": ["Providers"],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "id do estabelecimento.",
-          "required": true
-        }],
-        "responses":{
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do estabelecimento.",
+            "required": true
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -498,13 +558,17 @@
       "get": {
         "summary": "Busca de um estabelecimento pelo nome.",
         "description": "Busca de um estabelecimento pelo nome.",
-        "tags": ["Providers"],
-        "parameters": [{
-          "name": "name",
-          "in": "query",
-          "description": "Nome do estabelecimento para busca.",
-          "required": true
-        }],
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do estabelecimento para busca.",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -527,8 +591,14 @@
       "patch": {
         "summary": "Atualização de um avatar no provider",
         "description": "Rota responsável pela mudança de um avatar no provider.",
-        "tags": ["Providers"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Providers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -564,15 +634,21 @@
       "get": {
         "summary": "Busca lista de serviços de um estabelecimento autenticado.",
         "description": "Busca lista de serviços de um estabelecimento autenticado.",
-        "tags": ["Services"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Services"
                   }
@@ -591,8 +667,14 @@
       "post": {
         "summary": "Cadastro de serviço",
         "description": "Rota responsável pelo cadastro de um novo serviço do estabelecimento.",
-        "tags": ["Services"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -627,14 +709,18 @@
       "get": {
         "summary": "Busca de um serviço pelo id.",
         "description": "Busca de um serviço pelo id.",
-        "tags": ["Services"],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Nome do serviço pelo ID.",
-          "required": true
-        }],
-        "responses":{
+        "tags": [
+          "Services"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do serviço pelo ID.",
+            "required": true
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -654,14 +740,22 @@
       "put": {
         "summary": "Atualizar o serviço pelo id.",
         "description": "Atualizar o serviço pelo id.",
-        "tags": ["Services"],
-        "security": [{"bearerAuth": []}],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "Atualizar o serviço pelo ID.",
-          "required": true
-        }],
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualizar o serviço pelo ID.",
+            "required": true
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -671,7 +765,7 @@
             }
           }
         },
-        "responses":{
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
@@ -694,15 +788,23 @@
       "delete": {
         "summary": "deletar o serviço pelo id.",
         "description": "deletar o serviço pelo id.",
-        "tags": ["Services"],
-        "security": [{"bearerAuth": []}],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "description": "deletar o serviço pelo ID.",
-          "required": true
-        }],
-        "responses":{
+        "tags": [
+          "Services"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "deletar o serviço pelo ID.",
+            "required": true
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK"
           },
@@ -719,13 +821,17 @@
       "get": {
         "summary": "Busca de um serviço pelo nome.",
         "description": "Busca de um serviço pelo nome.",
-        "tags": ["Services"],
-        "parameters": [{
-          "name": "name",
-          "in": "query",
-          "description": "Nome do serviço para busca.",
-          "required": true
-        }],
+        "tags": [
+          "Services"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do serviço para busca.",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -748,12 +854,18 @@
       "post": {
         "summary": "Cadastro de sessão",
         "description": "Rota responsável pelo cadastro de uma nova sessão no sistema.",
-        "tags": ["Sessions"],
+        "tags": [
+          "Sessions"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/SessionRequest"
+              },
+              "example": {
+                "email": "zebarbearia@gmail.com",
+                "password": "1405"
               }
             }
           }

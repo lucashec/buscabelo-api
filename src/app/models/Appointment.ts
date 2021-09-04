@@ -28,16 +28,21 @@ export default class Appointment{
   })
   canceled_at: Date;
 
-  @ManyToOne(type => Provider, {eager: true})
+  @ManyToOne(() => Provider, (provider) => provider.appointments, {
+    eager: true
+  })
   provider: Provider;
 
-  @ManyToOne(type => Customer, {eager: true})
+  @ManyToOne(() => Customer, (customer) => customer.appointments, {
+    eager: true
+  })
   customer: Customer;
 
-  @ManyToOne(type => Service, {eager: true})
+  @ManyToOne(() => Service, (service) => service.appointments, {
+    eager: true
+  })
   service: Service;
 
-  @ManyToOne(type => Rating, {eager: true})
-  @JoinColumn()
+  @ManyToOne(() => Rating, (rating) => rating.appointments)
   rating: Rating;
 }

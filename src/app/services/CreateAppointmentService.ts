@@ -33,7 +33,9 @@ export default class CreateAppointmentService {
 
     const appointment = appointmentRepository.update(id, updateAppointment);
 
-    return appointment;
+    const currenteAppointment = appointmentRepository.findOne({id: id});
+
+    return currenteAppointment;
   }
 
   public async execute({
