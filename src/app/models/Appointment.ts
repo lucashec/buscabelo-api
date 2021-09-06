@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import Customer from "./Customer";
 import Provider from "./Provider";
@@ -43,6 +43,6 @@ export default class Appointment{
   })
   service: Service;
 
-  @ManyToOne(() => Rating, (rating) => rating.appointments)
-  rating: Rating;
+  @OneToMany(() => Rating, rating => rating.appointment)
+  rating: Rating[];
 }
