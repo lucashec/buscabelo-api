@@ -176,6 +176,9 @@ class AppointmentController{
     try{
       const { id } = request.params;
       const { rating_number, description, customer } = request.body;
+
+      if(isNaN(rating_number) || rating_number < 1 || rating_number > 5)
+        throw new Error("O valor da avaliação deve ser entre 1 e 5");
       
       const service = new CreateAppointmentService();
 

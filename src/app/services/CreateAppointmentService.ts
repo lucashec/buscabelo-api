@@ -6,7 +6,6 @@ import { getCustomRepository, getRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
 import Rating from '../models/Rating';
-import { response } from 'express';
 
 interface Request {
   provider: Provider;
@@ -84,12 +83,7 @@ export default class CreateAppointmentService {
   public async executeRating(newRating: RatingRequest) : Promise<Rating> {
     const repository = getRepository(Rating);
 
-    const rating = repository.create({
-      description: newRating.description,
-      rating_number: newRating.rating_number,
-      customer: newRating.customer,
-      appointment: newRating.appointment
-    } as RatingRequest);
+    const rating = repository.create(newRating);
 
     await repository.save(rating);
 

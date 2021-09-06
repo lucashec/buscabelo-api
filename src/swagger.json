@@ -256,7 +256,7 @@
         }
       }
     },
-    "/appointments/{id}/rating": {
+    "/appointments/{id}/rate": {
       "post": {
         "summary": "Cadastro de uma avaliação",
         "description": "Rota responsável pelo cadastro de uma nova avaliação.",
@@ -272,7 +272,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "id do consumidor.",
+            "description": "id do agendamento.",
             "required": true
           }
         ],
