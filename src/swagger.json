@@ -256,6 +256,56 @@
         }
       }
     },
+    "/appointments/{id}/rate": {
+      "post": {
+        "summary": "Cadastro de uma avaliação",
+        "description": "Rota responsável pelo cadastro de uma nova avaliação.",
+        "tags": [
+          "Appointments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do agendamento.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rating"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/customers": {
       "get": {
         "summary": "Busca lista de consumidores.",
@@ -269,10 +319,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Customers"
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/Customers"
                 }
               }
             }
@@ -406,10 +454,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Providers"
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/Providers"
                 }
               }
             }
@@ -1303,6 +1349,48 @@
           },
           "url": {
             "type": "string"
+          }
+        }
+      },
+      "RatingRequest": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "rating_number": {
+            "type": "number"
+          },
+          "appointment": {
+            "type": "number"
+          },
+          "customer": {
+            "type": "string"
+          }
+        }
+      },
+      "Rating": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "appointments": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "rating_number": {
+                "type": "number"
+              },
+              "appointment": {
+                "type": "number"
+              },
+              "customer": {
+                "type": "string"
+              }
+            }
           }
         }
       }

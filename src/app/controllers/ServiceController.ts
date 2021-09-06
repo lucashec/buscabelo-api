@@ -1,4 +1,4 @@
-import { Request, Response, } from 'express';
+import { Request, Response } from 'express';
 
 import CreateServiceHelper from '../services/CreateServiceHelper';
 

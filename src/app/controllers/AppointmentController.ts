@@ -170,9 +170,33 @@ class AppointmentController{
         message: err.message
       });
     }
-    
-  } 
+  }
   
+  async createRating(request: Request, response: Response){
+    try{
+      const { id } = request.params;
+      const { rating_number, description, customer } = request.body;
+
+      if(isNaN(rating_number) || rating_number < 1 || rating_number > 5)
+        throw new Error("O valor da avaliação deve ser entre 1 e 5");
+      
+      const service = new CreateAppointmentService();
+
+      const appointment = await service.findOne(Number(id));
+
+      const rating = await service.executeRating({rating_number, description, customer, appointment});
+  
+      return response.status(200).json({
+        success: true,
+        rating: rating
+      });
+    } catch (err){
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      })
+    }
+  } 
 }
 
 export default new AppointmentController();
