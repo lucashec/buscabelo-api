@@ -40,6 +40,7 @@ class ProviderController {
       return response.status(200).json({
         success: true,
         providers: providers.map(provider => ({
+          id: provider.id,
           name: provider.name,
           address: provider.address,
           description: provider.description,
@@ -66,6 +67,7 @@ class ProviderController {
       return response.status(200).json({
         success: true,
         provider: {
+          id: provider.id,
           name: provider.name,
           address: provider.address,
           description: provider.description,
@@ -97,6 +99,7 @@ class ProviderController {
           value: service.value,
           type: service.type,
           provider: {
+            id: service.provider.id,
             name: service.provider.name,
             address: service.provider.address,
             description: service.provider.description,
