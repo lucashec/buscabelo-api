@@ -12,15 +12,15 @@ class AppointmentController{
       const filteredAppointments = [];
       const dateNow =  parseISO(format(new Date, 'yyyy-mm-dd HH:ss'));
 
-      for(let appointment of appointments){
-        if (isBefore(appointment.appointment_to, dateNow)){
-          filteredAppointments.push(appointment);
-        }
-      }
+      // for(let appointment of appointments){
+      //   if (isBefore(appointment.appointment_to, dateNow)){
+      //     filteredAppointments.push(appointment);
+      //   }
+      // }
 
       return response.status(200).json({
         success: true,
-        appointments: filteredAppointments
+        appointments: appointments
       });
 
     }catch(err){

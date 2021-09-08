@@ -44,5 +44,5 @@ export default class Appointment{
   service: Service;
 
   @OneToMany(() => Rating, rating => rating.appointment)
-  rating: Rating[];
+  rating?: Rating[];
 }
