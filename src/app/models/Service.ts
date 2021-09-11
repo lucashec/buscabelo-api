@@ -38,6 +38,6 @@ export default class Service {
   @OneToMany(() => Image, (image) => image.service)
   images: Image [];
 
-  @OneToMany(() => Appointment, (appointment) => appointment.provider)
+  @OneToMany(() => Appointment, (appointment) => appointment.service)
   appointments: Appointment[];
 }

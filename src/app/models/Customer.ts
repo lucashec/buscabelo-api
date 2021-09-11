@@ -4,6 +4,6 @@ import User from './User';
 
 @ChildEntity()
 export default class Customer extends User {
-  @OneToMany(() => Appointment, (appointment) => appointment.provider)
+  @OneToMany(() => Appointment, (appointment) => appointment.customer)
   appointments: Appointment[];
 }

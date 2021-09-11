@@ -4,7 +4,7 @@ import Customer from "./Customer";
 
 @Entity()
 export default class Rating{
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: true })

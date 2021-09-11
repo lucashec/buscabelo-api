@@ -13,6 +13,10 @@
     {
       "url": "https://buscabelo-api.herokuapp.com/v1",
       "description": "heroku API"
+    },
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Local API"
     }
   ],
   "paths": {
