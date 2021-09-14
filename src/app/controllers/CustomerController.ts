@@ -85,7 +85,7 @@ class CustomerController{
     const sessionService = new SessionService();
     const currentUser = { email, password: ''};
 
-    if(!customerService.checkEmail(email)){
+    if(! await customerService.checkEmail(email)){
       try{
          const customer = await customerService.execute({
           name,
@@ -93,17 +93,28 @@ class CustomerController{
           password: ''
         });
         currentUser.email = customer.email
-  
-        return response.status(200).json({
-          message: "Customer Created!",
-          data: customer
-        });
+        const {user, token} = await sessionService.execute(currentUser);
+        return response.status(200).json(
+          {success:true,
+            user, token}); 
       } catch (err){
-        return response.status(400).json({error : err.message});
+        
+        return response.status(400).json({
+          sucess:false,
+          error : err.message});
       }  
 
     }
-    sessionService.execute(currentUser); 
+    try{
+      const {user, token} = await sessionService.execute(currentUser);
+      return response.status(200).json({success:true,user, token}); 
+    }catch(err){
+      console.log(err);
+      return response.status(400).json({
+        success:false,
+        error : err.message});
+    }
+    
     }
 
 }

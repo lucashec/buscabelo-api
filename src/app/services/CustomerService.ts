@@ -36,11 +36,11 @@ export default class CustomerService {
 
     const repository = getRepository(Customer);
     
-    const checkcustomerExists =  await repository.findOne({
+    const checkCustomerExists =  await repository.findOne({
       where: {email:newCustomer.email},
     });
 
-    if (this.checkEmail(newCustomer.email)){
+    if (checkCustomerExists){
       throw new Error ('Email address already used');
     }
     const hashedPassword = await hash(newCustomer.password, 8);
