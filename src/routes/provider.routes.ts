@@ -14,6 +14,7 @@ providerRouter.get('/:id/appointments', ProviderController.getAppointments);
 providerRouter.get('/:id', ProviderController.getById);
 providerRouter.get('/', ProviderController.getAll);
 providerRouter.post('/', ProviderController.create);
+providerRouter.post('/googleAuth', ProviderController.googleSignIn);
 providerRouter.patch('/avatar',
 EnsureAuthenticated,
 upload.single('avatar'),

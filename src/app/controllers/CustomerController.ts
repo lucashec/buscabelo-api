@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import customerRouter from '../../routes/customer.routes';
 
 import CustomerService from '../services/CustomerService';
+import SessionService from '../services/SessionService';
 
 class CustomerController {
   async getAll(request: Request, response: Response) {
@@ -45,8 +47,7 @@ class CustomerController {
       });
     }
   }
-
-  async getAppointments(request: Request, response: Response) {
+  async getAppointments(request: Request, response: Response){
     try {
       const { id } = request.params;
       const service = new CustomerService();
@@ -85,6 +86,45 @@ class CustomerController {
       });
     }
   }
+
+  async googleSignIn(request: Request, response: Response){
+    const {name, email} = request.body;
+    const customerService =  new CustomerService();
+    const sessionService = new SessionService();
+    const currentUser = { email, password: ''};
+
+    if(! await customerService.checkEmail(email)){
+      try{
+         const customer = await customerService.execute({
+          name,
+          email,
+          password: ''
+        });
+        currentUser.email = customer.email
+        const {user, token} = await sessionService.execute(currentUser);
+        return response.status(200).json(
+          {success:true,
+            user, token}); 
+      } catch (err){
+        
+        return response.status(400).json({
+          sucess:false,
+          error : err.message});
+      }  
+
+    }
+    try{
+      const {user, token} = await sessionService.execute(currentUser);
+      return response.status(200).json({success:true,user, token}); 
+    }catch(err){
+      console.log(err);
+      return response.status(400).json({
+        success:false,
+        error : err.message});
+    }
+    
+    }
+
 }
 
 export default new CustomerController();
