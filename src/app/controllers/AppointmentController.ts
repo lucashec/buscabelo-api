@@ -77,9 +77,15 @@ class AppointmentController{
       const { id } = request.params;
       const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd HH:mm:ss'));
       const appointmentService = new CreateAppointmentService();
-      //const currentAppointmet = await appointmentService.findOne(Number(id));
-
+      const currentAppointment = await appointmentService.findOne(Number(id));
+  
       if (path.includes('cancel')){
+        if (currentAppointment?.canceled_at !== null){
+          throw new Error ('Appointment is already canceled');
+        } else if (currentAppointment?.time_done_at !== null) {
+          throw new Error ('Appointment is already finished');
+        }
+    
         const appointment = await appointmentService.update(Number(id), {
           canceled_at,
         })
@@ -87,23 +93,26 @@ class AppointmentController{
           success: true,
           appointment: appointment
         });
-      } else {
-        // if (currentAppointmet?.canceled_at === null){
-        //   throw new Error ('Appointment is already canceled');
-        // }
-        // if (currentAppointmet?.appointment_to < addHours(timeNowParsed, 1)){
-        //   throw new Error (`It's too earlier to cancel`);
-        // }
-
-        const appointment = appointmentService.update(Number(id), {
-          time_done_at,        
-        })
-         return response.status(200).json({
-          success: true,
-          appointment: appointment
-        });
+      } else if (path.includes('finish')) {
+        if (currentAppointment?.canceled_at !== null){
+          throw new Error ('Appointment is already canceled');
+        }
+        if (currentAppointment?.appointment_to < addHours(timeNowParsed, 1)){
+          throw new Error (`It's too earlier to finish`);
+        }
+        if (currentAppointment?.canceled_at === null){
+          const appointment = await appointmentService.update(Number(id), {
+            time_done_at,        
+          })
+          console.log(appointment);
+           return response.status(200).json({
+            success: true,
+            appointment: currentAppointment
+          });
+        }
+        
       }
-
+  
       
     } catch(err){
       return response.status(400).json({
