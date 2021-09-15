@@ -101,16 +101,16 @@ class AppointmentController{
           throw new Error (`It's too earlier to finish`);
         }
         if (currentAppointment?.canceled_at === null){
-          const appointment = await appointmentService.update(Number(id), {
-            time_done_at,        
-          })
-          console.log(appointment);
-           return response.status(200).json({
-            success: true,
-            appointment: currentAppointment
-          });
+          
         }
-        
+        const appointment = await appointmentService.update(Number(id), {
+          time_done_at,        
+        })
+        console.log(appointment);
+         return response.status(200).json({
+          success: true,
+          appointment: currentAppointment
+        });
       }
   
       
