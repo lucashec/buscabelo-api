@@ -3,8 +3,9 @@ module.exports = {
    "url": process.env.DATABASE_URL,
    "synchronize": true,
    "ssl": true,
-   "entities": ["src/app/models/*.ts"],
-   "migrations": ["src/database/migrations/*.ts"],
+   "entities": [process.env.ROUTER_ENTITIES],
+   "logging": false,
+   "migrations": [process.env.ROUTER_MIGRATIONS],
    "cli": {
       "migrationsDir": "src/database/migrations"
    },

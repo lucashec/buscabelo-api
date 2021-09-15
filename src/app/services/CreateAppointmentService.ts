@@ -5,6 +5,7 @@ import { startOfHour } from 'date-fns';
 import { getCustomRepository, getRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
+import Rating from '../models/Rating';
 
 interface Request {
   provider: Provider;
@@ -12,6 +13,13 @@ interface Request {
   appointment_to: Date;
   scheduled_at: Date;
   service: Service;
+}
+
+interface RatingRequest {
+  customer: Customer;
+  appointment?: Appointment;
+  description?: string;
+  rating_number : number;
 }
 
 export default class CreateAppointmentService {
@@ -28,7 +36,15 @@ export default class CreateAppointmentService {
     const appointment = await repository.findOne(id);
     return appointment;
   }
+  public async update(id: number, updateAppointment : any){
+    const appointmentRepository = getRepository(Appointment);
 
+    const appointment = appointmentRepository.update(id, updateAppointment);
+
+    const currenteAppointment = appointmentRepository.findOne({id: id});
+
+    return currenteAppointment;
+  }
   public async execute({
     provider,
     customer,
@@ -63,5 +79,14 @@ export default class CreateAppointmentService {
     await appointmentRepository.save(appointment);
 
     return appointment;
+  }
+  public async executeRating(newRating: RatingRequest) : Promise<Rating> {
+    const repository = getRepository(Rating);
+
+    const rating = repository.create(newRating);
+
+    await repository.save(rating);
+
+    return rating;
   }
 }

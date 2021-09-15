@@ -1,4 +1,5 @@
 import { ChildEntity, Column, OneToMany } from 'typeorm';
+import Appointment from './Appointment';
 import Service from './Service';
 import User from './User';
 
@@ -15,4 +16,7 @@ export default class Provider extends User {
 
   @OneToMany(() => Service, service => service.provider)
   services: Service[];
+
+  @OneToMany(() => Appointment, appointment => appointment.provider)
+  appointments: Appointment[];
 }
