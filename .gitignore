@@ -5,5 +5,3 @@ temp/*
 !temp/.gitkeep
 
 .env
-
-yarn-error.log
