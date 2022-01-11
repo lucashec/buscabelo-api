@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import SessionService from '@modules/users/services/SessionService';
+<<<<<<< HEAD
 import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
 import CustomerRepository from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
@@ -15,6 +16,16 @@ export class SessionController {
   }  
    
    static getInstance(): SessionController{
+=======
+import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
+import GoogleAuthService from '@modules/customers/services/GoogleAuth';
+import { container } from 'tsyringe';
+
+export class SessionController {
+  private static INSTANCE : SessionController;
+ 
+  static getInstance(): SessionController{
+>>>>>>> master
     if (!SessionController.INSTANCE){
       SessionController.INSTANCE = new SessionController();
     }
@@ -24,7 +35,11 @@ export class SessionController {
   
   async create(request: Request, response: Response) {
     try {
+<<<<<<< HEAD
       const sessionService = new SessionService(this.userRepository);
+=======
+      const sessionService = container.resolve(SessionService);
+>>>>>>> master
       const { email, password } = request.body;
       const { user, token } = await sessionService.execute({
         email,
@@ -50,9 +65,15 @@ export class SessionController {
 
   async googleSignIn(request: Request, response: Response){
     const {name, email} = request.body;
+<<<<<<< HEAD
     const findCustomerService =  new GoogleAuthService(this.customerRepository);
     const createCustomerSerivce = new CreateCustomerService(this.customerRepository);
     const sessionService = new SessionService(this.userRepository);
+=======
+    const findCustomerService = container.resolve(GoogleAuthService);
+    const createCustomerSerivce = container.resolve(CreateCustomerService);
+    const sessionService = container.resolve(SessionService);
+>>>>>>> master
     const currentUser = { email, password: ''};
     
     if(! await findCustomerService.execute(email)){

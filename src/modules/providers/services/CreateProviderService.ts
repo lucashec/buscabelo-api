@@ -1,4 +1,8 @@
 import { hash } from 'bcryptjs';
+<<<<<<< HEAD
+=======
+import { injectable, inject } from 'tsyringe';
+>>>>>>> master
 import Provider from '../infra/typeorm/entities/Provider';
 import IProviderRepository from '../repositories/IProviderRepository';
 
@@ -7,9 +11,18 @@ export default interface IUser {
   email: string;
   password: string;
 }
+<<<<<<< HEAD
 
 export default class CreateProviderService {
   constructor(private providerRepository : IProviderRepository){}
+=======
+injectable()
+export default class CreateProviderService {
+  constructor(
+    @inject("ProviderRepository")
+    private providerRepository: IProviderRepository
+    ){}
+>>>>>>> master
 
   public async execute(newProvider: any): Promise<Provider> {
     

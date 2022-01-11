@@ -2,9 +2,20 @@ import { hash } from 'bcryptjs';
 import Customer from '@modules/customers/infra/typeorm/entities/Customer'
 import IUser from '@modules/users/dtos/IUserDTO';
 import ICustomerRepository from '../repositories/ICustomerRepository';
+<<<<<<< HEAD
 
 export default class CreateCustomerService {
   constructor(private CustomerRepository: ICustomerRepository){}
+=======
+import { injectable, inject } from "tsyringe";
+
+@injectable()
+export default class CreateCustomerService {
+  constructor(
+    @inject("CustomerRepository")
+    private CustomerRepository: ICustomerRepository
+    ){}
+>>>>>>> master
 
   public async execute(newCustomer: IUser): Promise<Customer> {
 
