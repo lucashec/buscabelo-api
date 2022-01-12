@@ -1,31 +1,15 @@
 import { Request, Response } from 'express';
-<<<<<<< HEAD
-import ProviderRepository from '@modules/providers/infra/typeorm/repositories/ProviderRepository';
-=======
->>>>>>> master
 import CreateProviderService from '@modules/providers/services/CreateProviderService';
 import FilterByNameService from '@modules/providers/services/FilterByNameService';
 import FindAppointmentsByProviderService from '@modules/providers/services/FindAppointmentsByProviderService';
 import FindProviderByIdService from '@modules/providers/services/FindProviderByIdService';
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
-<<<<<<< HEAD
-
-export class ProviderController {
-  private providerRepository : ProviderRepository;
-  private static INSTANCE : ProviderController;
-  
-  constructor(){
-    this.providerRepository = new ProviderRepository();
-  }  
-   
-=======
 import { container } from 'tsyringe';
 
 export class ProviderController {
   private static INSTANCE : ProviderController;
   
->>>>>>> master
    static getInstance(): ProviderController{
     if (!ProviderController.INSTANCE){
       ProviderController.INSTANCE = new ProviderController();
@@ -35,11 +19,7 @@ export class ProviderController {
 
   async getAll(request: Request, response: Response) {
     try {
-<<<<<<< HEAD
-      const providerService = new GetAllProvidersService(this.providerRepository);
-=======
       const providerService = container.resolve(GetAllProvidersService);
->>>>>>> master
 
       const providers = await providerService.execute()
 
@@ -67,11 +47,7 @@ export class ProviderController {
     try {
       let name = request.query["name"];
 
-<<<<<<< HEAD
-      const providerService = new FilterByNameService(this.providerRepository);
-=======
       const providerService = container.resolve(FilterByNameService);
->>>>>>> master
 
       const providers = await providerService.execute(name);
 
@@ -97,11 +73,7 @@ export class ProviderController {
   async getById(request: Request, response: Response) {
     try {
       const { id } = request.params;
-<<<<<<< HEAD
-      const providerService = new FindProviderByIdService(this.providerRepository);
-=======
       const providerService = container.resolve(FindProviderByIdService);
->>>>>>> master
 
       const provider = await providerService.execute(id);
 
@@ -126,11 +98,7 @@ export class ProviderController {
   async getServices(request: Request, response: Response) {
     try {
       const { id } = request.params;
-<<<<<<< HEAD
-      const providerService = new FindServicesByProviderService(this.providerRepository);
-=======
       const providerService = container.resolve(FindServicesByProviderService);
->>>>>>> master
 
       const services = await providerService.execute(id);
 
@@ -162,11 +130,7 @@ export class ProviderController {
   async getAppointments(request: Request, response: Response) {
     try {
       const { id } = request.params;
-<<<<<<< HEAD
-      const service = new FindAppointmentsByProviderService(this.providerRepository);
-=======
       const service = container.resolve(FindAppointmentsByProviderService);
->>>>>>> master
 
       const appointments = await service.execute(id);
 
@@ -203,11 +167,7 @@ export class ProviderController {
 
   async create(request: Request, response: Response) {
     try {
-<<<<<<< HEAD
-      const service = new CreateProviderService(this.providerRepository);
-=======
       const service = container.resolve(CreateProviderService);
->>>>>>> master
 
       const { name, email, password } = request.body;
 

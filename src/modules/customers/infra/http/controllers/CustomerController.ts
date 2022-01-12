@@ -3,21 +3,10 @@ import { Request, Response } from 'express';
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 import GetAllCustomerService from '@modules/customers/services/GetAllCustomersService';
 import FindAppointmentsByCustomerService from '@modules/customers/services/FindAppointmentsByCustomerService';
-<<<<<<< HEAD
-
-export class CustomerController{
-  private customerRepository : CustomerRepository;
-  private static INSTANCE : CustomerController;
-  
-  constructor(){
-    this.customerRepository = new CustomerRepository();
-  }  
-=======
 import { container } from "tsyringe";
 
 export class CustomerController{
   private static INSTANCE : CustomerController;
->>>>>>> master
    
    static getInstance(): CustomerController{
     if (!CustomerController.INSTANCE){
@@ -28,11 +17,7 @@ export class CustomerController{
 
   async getAll(request: Request, response: Response) {
     try {
-<<<<<<< HEAD
-      const customerService = new GetAllCustomerService(this.customerRepository);
-=======
       const customerService = container.resolve(GetAllCustomerService);
->>>>>>> master
 
       const customers = await customerService.execute()
 
@@ -51,11 +36,7 @@ export class CustomerController{
 
   async create(request: Request, response: Response) {
     try {
-<<<<<<< HEAD
-      const customerService = new CreateCustomerService(this.customerRepository);
-=======
       const customerService = container.resolve(CreateCustomerService);
->>>>>>> master
 
       const { name, email, password } = request.body;
 
@@ -80,11 +61,7 @@ export class CustomerController{
   async getAppointments(request: Request, response: Response) {
     try {
       const { id } = request.params;
-<<<<<<< HEAD
-      const customerService = new FindAppointmentsByCustomerService(this.customerRepository);
-=======
       const customerService = container.resolve(FindAppointmentsByCustomerService);
->>>>>>> master
       const appointments = await customerService.execute(id);
 
       return response.status(200).json({

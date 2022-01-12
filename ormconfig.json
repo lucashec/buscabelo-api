@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
-=======
    "name": "default",
->>>>>>> master
    "type": "postgres",
    "host": "db",
    "port": 5432,
