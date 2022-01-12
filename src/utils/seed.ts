@@ -1,7 +1,7 @@
 
-import { randomUUID } from "crypto";
 import { getConnection } from "typeorm";
 import { createConnection } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 function createUser(type: string) {
   /*
@@ -16,7 +16,7 @@ function createUser(type: string) {
   type           | character varying |           | not null |                    | extended |             |              |
   */
 
-  const uuid = randomUUID()
+  const uuid = uuidv4()
   const entitie_name = `${type} ${uuid}`;
 
   let entitie = {
