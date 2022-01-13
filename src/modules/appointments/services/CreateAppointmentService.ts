@@ -1,4 +1,4 @@
-import { startOfHour } from 'date-fns';
+import { startOfHour,parseISO, format, isBefore } from 'date-fns';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 import IAppointmentDTO from '../dtos/IAppointmentDTO';
@@ -26,6 +26,15 @@ export default class CreateAppointmentService {
       appointmentDate,
     );
 
+    const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd'));
+    const parsedDate = parseISO(appointment_to.toString()); 
+
+      if(isBefore(parsedDate, timeNowParsed)){
+        throw new Error ('The data must be later than this');
+      }
+      if(provider === customer){
+        throw new Error ('Users must be distinct');
+      }
 
     if (findAppointmentInSameDate) {
       throw Error("this time it's already booked");
