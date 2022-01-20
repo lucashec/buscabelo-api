@@ -69,7 +69,41 @@ class AppointmentController{
       });
     }
   }
+  async finish(request: Request, response: Response){
+    
+    try {
+      const {time_done_at} = request.body;
+      const { id } = request.params;
+      const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd HH:mm:ss'));
+      const appointmentService = new CreateAppointmentService();
+      const currentAppointment = await appointmentService.findOne(Number(id));
+  
+      if (currentAppointment?.canceled_at !== null){
+        throw new Error ('Appointment is already canceled');
+      }
+      if (currentAppointment?.appointment_to < addHours(timeNowParsed, 1)){
+        throw new Error (`It's too early to finish`);
+      }
+      if (currentAppointment?.canceled_at === null){
+        
+      }
+      const appointment = await appointmentService.update(Number(id), {
+        time_done_at,        
+      })
 
+       return response.status(200).json({
+        success: true,
+        appointment: currentAppointment
+      });
+  
+      
+    } catch(err){
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  } 
   async update(request: Request, response: Response){
     const path = request.path
     try {
@@ -121,7 +155,35 @@ class AppointmentController{
       });
     }
   } 
+  async cancel(request: Request, response: Response){
+    const path = request.path
+    try {
+      const { canceled_at } = request.body;
+      const { id } = request.params;
+      const appointmentService = new CreateAppointmentService();
+      const currentAppointment = await appointmentService.findOne(Number(id));
+  
+      if (currentAppointment?.canceled_at !== null){
+        throw new Error ('Appointment is already canceled');
+      } else if (currentAppointment?.time_done_at !== null) {
+        throw new Error ('Appointment is already finished');
+      }
+  
+      const appointment = await appointmentService.update(Number(id), {
+        canceled_at,
+      })
+       return response.status(200).json({
+        success: true,
+        appointment: appointment
+      });
 
+    } catch(err){
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  }
   async create(request: Request, response: Response){
     try{
       const {

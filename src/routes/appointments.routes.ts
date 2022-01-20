@@ -9,6 +9,7 @@ appointmentRouter.post('/', ensureAuthenticated, appointmentController.create);
 appointmentRouter.get('/', ensureAuthenticated, appointmentController.getAll);
 appointmentRouter.get('/:id', ensureAuthenticated, appointmentController.getById);
 appointmentRouter.post('/:id/rate', appointmentController.createRating);
-appointmentRouter.patch('/cancel/:id', ensureAuthenticated, appointmentController.update);
-appointmentRouter.patch('/finish/:id', ensureAuthenticated, appointmentController.update);
+appointmentRouter.patch('/cancel/:id', ensureAuthenticated, appointmentController.cancel);
+appointmentRouter.patch('/finish/:id', ensureAuthenticated, appointmentController.finish);
+
 export default appointmentRouter;
