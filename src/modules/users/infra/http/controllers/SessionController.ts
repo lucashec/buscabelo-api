@@ -30,7 +30,8 @@ export class SessionController {
         user: {
           id: user.id,
           name: user.name,
-          email: user.email
+          email: user.email,
+          type: user.type
         }
       });
     } catch (err) {
