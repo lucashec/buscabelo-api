@@ -1,5 +1,4 @@
-import {container} from 'tsyringe';
-
+import {container, delay} from 'tsyringe';
 import ICustomerRepository from '@modules/customers/repositories/ICustomerRepository';
 import CustomerRepository from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository'
@@ -10,6 +9,8 @@ import ServiceRepository from '@modules/services/infra/typeorm/repositories/Serv
 import IServiceRepository from '@modules/services/repositories/iServiceRepository';
 import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository'
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
+import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+import S3StorageProvider from './providers/StorageProvider/implementations/S3StorageProvider';
 
 container.registerSingleton<ICustomerRepository>(
     'CustomerRepository',
@@ -30,4 +31,9 @@ container.registerSingleton<IServiceRepository>(
 container.registerSingleton<IAppointmentRepository>(
     'AppointmentRepository',
     AppointmentRepository
+);
+
+container.registerSingleton<IStorageProvider>(
+    'StorageProvider',
+    S3StorageProvider
 );
