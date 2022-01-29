@@ -6,13 +6,22 @@ import {isEqual} from 'date-fns'
 export default class AppointmentRepository implements IAppointmentRepository{
   private appointments: Appointment [] = [];
 
+  public constructor() {
+    var targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 10);
+
+    let appointment = new Appointment();
+    appointment.appointment_to = targetDate
+    appointment.id = 0
+
+    this.appointments.push(appointment)
+  }
+
   public async getAllAppointments(): Promise<Appointment[] | undefined> {
     return this.appointments;
   }
   public async findAppointmentById(id: number): Promise<Appointment | undefined> {
-    const findAppointment = this.appointments.find(
-        appointment => appointment.id = id 
-    )
+    const findAppointment = this.appointments.find(appointment => appointment.id == id)
     return findAppointment;
   }
 
@@ -35,9 +44,16 @@ export default class AppointmentRepository implements IAppointmentRepository{
       return appointment;
   }
   public async update(id: number, updateAppointment: any ): Promise<Appointment | undefined>{
-    let findAppointment = this.appointments.find(
-        appointment => appointment.id = id
+    let findAppointment = this.appointments.findIndex(
+        appointment => appointment.id == id
     )
-    return findAppointment;
+    if (findAppointment >= 0) {
+
+      let newAppointment = { ...this.appointments[findAppointment], ...updateAppointment }
+
+      this.appointments[findAppointment] = newAppointment  
+  
+      return newAppointment;
+    }
   }
 }
