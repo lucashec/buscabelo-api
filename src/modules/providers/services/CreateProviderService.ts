@@ -1,5 +1,4 @@
 import { hash } from 'bcryptjs';
-import { injectable, inject } from 'tsyringe';
 import Provider from '../infra/typeorm/entities/Provider';
 import IProviderRepository from '../repositories/IProviderRepository';
 
@@ -8,10 +7,8 @@ export default interface IUser {
   email: string;
   password: string;
 }
-injectable()
 export default class CreateProviderService {
   constructor(
-    @inject("ProviderRepository")
     private providerRepository: IProviderRepository
     ){}
 

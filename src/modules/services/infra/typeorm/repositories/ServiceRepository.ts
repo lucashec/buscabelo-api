@@ -2,16 +2,22 @@ import {getRepository, Repository, ILike} from 'typeorm';
 import Service from '../entities/Service';
 import IServiceRepository from '@modules/services/repositories/iServiceRepository'
 import IServiceDTO from '@modules/services/dtos/IServiceDTO';
+import Provider from '@modules/providers/infra/typeorm/entities/Provider';
 
 export default class ServiceRepository implements IServiceRepository{
   private ormRepository : Repository<Service>
+  private providerRepository : Repository<Provider>
   
   public constructor(){
     this.ormRepository = getRepository(Service);
+    this.providerRepository = getRepository(Provider);
   }
   public async create(serviceDTO: IServiceDTO): Promise<Service>{
       const service = await this.ormRepository.create(serviceDTO);
-      
+      const provider = await this.providerRepository.findOne({
+        where: {id:serviceDTO.provider},
+      });
+      service.provider = provider!;
       this.ormRepository.save(serviceDTO);
 
       return service;

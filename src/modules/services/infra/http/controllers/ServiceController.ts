@@ -6,7 +6,9 @@ import FindServiceByIdManager from '@modules/services/managers/FindServiceByIdMa
 import UpdateServiceManager from '@modules/services/managers/UpdateServiceManager';
 import CreateServiceManager from '@modules/services/managers/CreateServiceManager';
 import { container } from 'tsyringe';
-
+import ServiceRepository from '../../typeorm/repositories/ServiceRepository';
+import ProviderRepository from '@modules/providers/infra/typeorm/repositories/ProviderRepository';
+import CustomerRepository from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 
 export class ServiceController {
   private static INSTANCE : ServiceController;
@@ -106,10 +108,13 @@ export class ServiceController {
   }
 
   async create(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
+    const providerRepository = new CustomerRepository();
+
     try {
       const { name, description, value, provider } = request.body;
 
-      const createService = container.resolve(CreateServiceManager);
+      const createService = new CreateServiceManager(serviceRepository, providerRepository);
 
       const service = await createService.execute({
         name,
