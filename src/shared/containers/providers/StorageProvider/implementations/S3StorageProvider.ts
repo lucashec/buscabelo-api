@@ -8,10 +8,6 @@ import path from 'path';
 export default class S3StorageProvider implements IStorageProvider{
     private client : S3; 
     constructor(){
-        // aws.config.update({
-        //     accessKeyId: 'AKIA4WAQSCTNMPXRODVN',
-        //     secretAccessKey:'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'
-        // })
         this.client = new aws.S3({
             region: 'us-east-1',
         })
