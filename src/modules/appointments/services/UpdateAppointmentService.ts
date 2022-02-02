@@ -8,10 +8,10 @@ export default class UpdateAppointmentService {
     private appointmentsRepository: IAppointmentRepository
     ){}
   public async execute(id: number, updateAppointment : any){
-    const appointment = this.appointmentsRepository.update(id, updateAppointment);
-
-    const currenteAppointment = this.appointmentsRepository.findAppointmentById(id);
-
+    await this.appointmentsRepository.update(id, updateAppointment);
+    
+    const currenteAppointment = await this.appointmentsRepository.findAppointmentById(id);
+    
     return currenteAppointment;
   }
 }
