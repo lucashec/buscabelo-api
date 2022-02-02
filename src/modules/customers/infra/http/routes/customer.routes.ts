@@ -8,14 +8,14 @@ import EnsureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 const customerRouter = Router();
 const upload =  multer(uploadingConfig);
 const controller = CustomerController.getInstance();
-//const userController = UserController.getInstance();
+const userController = UserController.getInstance();
 
 customerRouter.post('/', controller.create);
 customerRouter.get('/', controller.getAll);
 customerRouter.get('/:id/appointments', controller.getAppointments);
-// customerRouter.patch('/avatar', 
-// EnsureAuthenticated,
-// upload.single('avatar'),
-// userController.UpdateAvatar);
+customerRouter.patch('/avatar', 
+EnsureAuthenticated,
+upload.single('avatar'),
+userController.UpdateAvatar);
 
 export default customerRouter;

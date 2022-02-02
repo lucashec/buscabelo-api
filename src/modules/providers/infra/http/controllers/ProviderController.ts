@@ -27,6 +27,7 @@ export class ProviderController {
         success: true,
         providers: providers?.map(provider => ({
           id: provider.id,
+          type:'provider',
           name: provider.name,
           address: provider.address,
           description: provider.description,
@@ -54,6 +55,7 @@ export class ProviderController {
       return response.status(200).json({
         success: true,
         providers: providers?.map(provider => ({
+          type: 'provider',
           name: provider.name,
           address: provider.address,
           description: provider.description,
@@ -80,6 +82,7 @@ export class ProviderController {
       return response.status(200).json({
         success: true,
         provider: {
+          type:'provider',
           name: provider.name,
           address: provider.address,
           description: provider.description,

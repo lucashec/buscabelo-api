@@ -23,7 +23,13 @@ export class CustomerController{
 
       return response.status(200).json({
         success: true,
-        customers: customers
+        customers: customers?.map(customer => ({
+          id: customer?.id,
+          type: 'customer',
+          name: customer?.name,
+          email: customer?.email,
+          avatar: customer?.avatar
+        }))
       });
 
     } catch (err) {

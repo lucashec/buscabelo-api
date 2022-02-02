@@ -1,46 +1,43 @@
-import {getRepository, Repository} from 'typeorm';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment'
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 import IAppointmentDTO from '@modules/appointments/dtos/IAppointmentDTO';
- 
+import {isEqual} from 'date-fns'
+
 export default class AppointmentRepository implements IAppointmentRepository{
-  private ormRepository : Repository<Appointment>
-  
-  public constructor(){
-    this.ormRepository = getRepository(Appointment);
-  }
+  private appointments: Appointment [] = [];
+
   public async getAllAppointments(): Promise<Appointment[] | undefined> {
-    const appointments = await this.ormRepository.find();
-    return appointments;
+    return this.appointments;
   }
   public async findAppointmentById(id: number): Promise<Appointment | undefined> {
-    const appointment = await this.ormRepository.findOne({id: id})
-    return appointment;
+    const findAppointment = this.appointments.find(
+        appointment => appointment.id = id 
+    )
+    return findAppointment;
   }
 
   public async findByDate(date: Date): Promise<Appointment | undefined> {
-    const findAppointment = await this.ormRepository.findOne({
-      where: {appointment_to: date}
-    }); 
-    
+    const findAppointment = this.appointments.find(
+        appointment => isEqual(appointment.appointment_to,date) 
+    )
     return findAppointment;
   }
   public async create({provider, customer, 
     appointment_to, scheduled_at}: IAppointmentDTO): Promise<Appointment>{
-      const appointment = await this.ormRepository.create({
-        provider,
-        customer,
-        appointment_to,
-        scheduled_at
-      });
-      
-      this.ormRepository.save(appointment);
-
+      const appointment = new Appointment();
+      Object.assign(appointment, {
+          provider,
+          customer,
+          appointment_to,
+          scheduled_at,
+      })
+      this.appointments.push(appointment)
       return appointment;
   }
   public async update(id: number, updateAppointment: any ): Promise<Appointment | undefined>{
-    await this.ormRepository.update(id, updateAppointment);
-    const appointment = await this.ormRepository.findOne({id : id});
-    return appointment;
+    let findAppointment = this.appointments.find(
+        appointment => appointment.id = id
+    )
+    return findAppointment;
   }
 }
