@@ -6,6 +6,7 @@ import FindProviderByIdService from '@modules/providers/services/FindProviderByI
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
 import { container } from 'tsyringe';
+import ProviderRepository from '../../typeorm/repositories/ProviderRepository';
 
 export class ProviderController {
   private static INSTANCE : ProviderController;
@@ -169,8 +170,9 @@ export class ProviderController {
   }
 
   async create(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
-      const service = container.resolve(CreateProviderService);
+      const service = new CreateProviderService(providerRepository);
 
       const { name, email, password } = request.body;
 

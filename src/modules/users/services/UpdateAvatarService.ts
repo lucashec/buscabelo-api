@@ -1,40 +1,33 @@
-import path from 'path';
-import fs from 'fs';
-import uploadConfig from '@config/upload'
 import User from '../infra/typeorm/entities/User';
 import IUserRepository from '../repositories/IUserRepository';
-import { injectable, inject } from 'tsyringe';
+import IStorageProvider from '@shared/containers/providers/StorageProvider/models/IStorageProvider';
 
 interface Request{
   user_id: string,
   avatarFileName?: string,
 }
-injectable()
+
 export default class UpdateAvatarService {
   constructor(
-    @inject("UserRepository")
-    private userRepository: IUserRepository
+    private userRepository: IUserRepository,
+    private storageProvider: IStorageProvider
     ){}
   public async execute({user_id, avatarFileName}: Request): Promise<User>{
 
-    const user = await this.userRepository.findByEmail(user_id);
-
+    const user = await this.userRepository.findById(user_id);
     if (!user){
       throw new Error('You should be authenticated to get this');
     }
 
     if (user.avatar){
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (userAvatarFileExists){
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await this.storageProvider.deleteFile(user.avatar);
     }
-    user.avatar = avatarFileName as string;
-    this.userRepository.save(user);
+    const fileName = await this.storageProvider.saveFile(avatarFileName!);
+
+    user.avatar = `https://buscabelo-cdn.s3.amazonaws.com/${fileName}`;
+    await this.userRepository.save(user);
 
     return user;
   }
-
+  
 }
