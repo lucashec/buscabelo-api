@@ -1,11 +1,8 @@
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import { injectable, inject } from 'tsyringe';
 import IProviderRepository from '../repositories/IProviderRepository';
 
-@injectable()
 export default class FindAppointmentsByProviderService{
   constructor(
-    @inject("ProviderRepository")
     private providerRepository: IProviderRepository
     ){}
 

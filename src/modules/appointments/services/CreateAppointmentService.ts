@@ -2,12 +2,9 @@ import { startOfHour,parseISO, format, isBefore } from 'date-fns';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 import IAppointmentDTO from '../dtos/IAppointmentDTO';
-import { injectable, inject } from 'tsyringe';
 
-@injectable()
 export default class CreateAppointmentService {
   constructor(
-    @inject("AppointmentRepository")
     private appointmentsRepository: IAppointmentRepository
     ){}
   public async execute({

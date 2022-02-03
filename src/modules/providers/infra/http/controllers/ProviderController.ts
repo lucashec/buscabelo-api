@@ -5,7 +5,6 @@ import FindAppointmentsByProviderService from '@modules/providers/services/FindA
 import FindProviderByIdService from '@modules/providers/services/FindProviderByIdService';
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
-import { container } from 'tsyringe';
 import ProviderRepository from '../../typeorm/repositories/ProviderRepository';
 
 export class ProviderController {
@@ -19,8 +18,9 @@ export class ProviderController {
   }
 
   async getAll(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
-      const providerService = container.resolve(GetAllProvidersService);
+      const providerService = new GetAllProvidersService(providerRepository);
 
       const providers = await providerService.execute()
 
@@ -46,10 +46,11 @@ export class ProviderController {
   }
 
   async filterName(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
       let name = request.query["name"];
 
-      const providerService = container.resolve(FilterByNameService);
+      const providerService = new FilterByNameService(providerRepository)
 
       const providers = await providerService.execute(name);
 
@@ -74,9 +75,10 @@ export class ProviderController {
   }
 
   async getById(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
       const { id } = request.params;
-      const providerService = container.resolve(FindProviderByIdService);
+      const providerService = new FindProviderByIdService(providerRepository);
 
       const provider = await providerService.execute(id);
 
@@ -100,9 +102,10 @@ export class ProviderController {
   }
 
   async getServices(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
       const { id } = request.params;
-      const providerService = container.resolve(FindServicesByProviderService);
+      const providerService = new FindServicesByProviderService(providerRepository);
 
       const services = await providerService.execute(id);
 
@@ -132,9 +135,10 @@ export class ProviderController {
   }
 
   async getAppointments(request: Request, response: Response) {
+    const providerRepository = new ProviderRepository();
     try {
       const { id } = request.params;
-      const service = container.resolve(FindAppointmentsByProviderService);
+      const service = new FindAppointmentsByProviderService(providerRepository);
 
       const appointments = await service.execute(id);
 

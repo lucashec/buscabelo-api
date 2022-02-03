@@ -1,11 +1,8 @@
 import Service from '@modules/services/infra/typeorm/entities/Service';
-import { injectable, inject } from 'tsyringe';
 import IProviderRepository from '../repositories/IProviderRepository';
 
-@injectable()
 export default class FindServicesByProviderService {
   constructor(
-    @inject("ProviderRepository")
     private providerRepository: IProviderRepository
     ){}
 

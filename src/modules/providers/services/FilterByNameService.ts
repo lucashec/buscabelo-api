@@ -2,10 +2,8 @@ import { injectable , inject} from 'tsyringe';
 import Provider from '../infra/typeorm/entities/Provider'
 import IProviderRepository from '../repositories/IProviderRepository';
 
-@injectable()
 export default class FilterByNameService {
   constructor(
-    @inject("ProviderRepository")
     private providerRepository: IProviderRepository
     ){}
 

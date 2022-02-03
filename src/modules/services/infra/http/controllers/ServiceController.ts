@@ -5,9 +5,7 @@ import FindByProviderManager from '@modules/services/managers/FindByProviderMana
 import FindServiceByIdManager from '@modules/services/managers/FindServiceByIdManager';
 import UpdateServiceManager from '@modules/services/managers/UpdateServiceManager';
 import CreateServiceManager from '@modules/services/managers/CreateServiceManager';
-import { container } from 'tsyringe';
 import ServiceRepository from '../../typeorm/repositories/ServiceRepository';
-import ProviderRepository from '@modules/providers/infra/typeorm/repositories/ProviderRepository';
 import CustomerRepository from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 
 export class ServiceController {
@@ -21,8 +19,9 @@ export class ServiceController {
   }
 
   async getAll(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
     try {
-      const serviceManager = container.resolve(FindByProviderManager);
+      const serviceManager = new FindByProviderManager(serviceRepository);
 
       const services = await serviceManager.execute(request.user.id)
       return response.status(200).json({
@@ -49,9 +48,10 @@ export class ServiceController {
   }
 
   async getById(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
     try {
       const { id } = request.params;
-      const serviceManager = container.resolve(FindServiceByIdManager);
+      const serviceManager = new FindServiceByIdManager(serviceRepository);
 
       const service = await serviceManager.execute(Number(id));
 
@@ -79,10 +79,11 @@ export class ServiceController {
   }
 
   async filterName(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
     try {
       let name = request.query["name"];
 
-      const manager = container.resolve(FilterByNameManager);
+      const manager = new FilterByNameManager(serviceRepository);
       const services = await manager.execute(name);
 
       return response.status(200).json({
@@ -147,10 +148,11 @@ export class ServiceController {
   }
 
   async update(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
     try {
       const { name, description, value, provider } = request.body;
       const { id } = request.params;
-      const manager = container.resolve(UpdateServiceManager);
+      const manager = new UpdateServiceManager(serviceRepository);
       const service = await manager.execute(Number(id), {
         name,
         description,
@@ -171,9 +173,10 @@ export class ServiceController {
   }
 
   async remove(request: Request, response: Response) {
+    const serviceRepository = new ServiceRepository();
     try {
       const { id } = request.params;
-      const manager = container.resolve(DeleteServiceManager);
+      const manager = new DeleteServiceManager(serviceRepository);
       const service = await manager.execute(Number(id))
 
       return response.status(200).json({
