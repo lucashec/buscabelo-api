@@ -2,12 +2,18 @@ import {getRepository, Repository, ILike} from 'typeorm';
 import IProviderRepository from '@modules/providers/repositories/IProviderRepository'
 import Provider from '../entities/Provider';
 import IUserDTO from '@modules/users/dtos/IUserDTO';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import Service from '@modules/services/infra/typeorm/entities/Service';
 
 export default class ProviderRepository implements IProviderRepository{
   private ormRepository : Repository<Provider>
+  private appointmentRepository : Repository<Appointment>
+  private serviceRepository : Repository<Service>
   
   public constructor(){
     this.ormRepository = getRepository(Provider);
+    this.appointmentRepository = getRepository(Appointment);
+    this.serviceRepository =  getRepository(Service);
   }
   public async create(userDTO: IUserDTO): Promise<Provider>{
       const provider = await this.ormRepository.create(userDTO);
@@ -22,7 +28,7 @@ export default class ProviderRepository implements IProviderRepository{
   }
   public async find(): Promise<Provider[] | undefined>{
     const providers = await this.ormRepository.find();
-
+    
     return providers;
   }
   public async findByEmail(email: string): Promise<Provider | undefined>{
@@ -36,5 +42,17 @@ export default class ProviderRepository implements IProviderRepository{
       name: ILike(`%${name}%`)
     });
     return providers;
+  }
+  public async findAppointmentsByProvider(id: string): Promise<Appointment[] | undefined>{
+    const appointments = await this.appointmentRepository.find({
+      provider: {id: id}
+    });
+    return appointments; 
+  }
+  public async findServicesByProvider(id: string): Promise<Service[] | undefined>{
+    const services = await this.serviceRepository.find({
+      provider: {id: id}
+    });
+    return services; 
   }
 }

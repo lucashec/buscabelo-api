@@ -7,8 +7,7 @@ export default class FindServicesByProviderService {
     ){}
 
   public async execute(id: string): Promise<Service[]> {
-    const provider = await this.providerRepository.findById(id);
-    const services = provider?.services;
+    const services = await this.providerRepository.findServicesByProvider(id);
 
     if(!services) {
       throw new Error ('no services found!');

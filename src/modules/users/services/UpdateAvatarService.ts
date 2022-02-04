@@ -26,7 +26,7 @@ export default class UpdateAvatarService {
 
     user.avatar = `https://buscabelo-cdn.s3.amazonaws.com/${fileName}`;
     await this.userRepository.save(user);
-
+    
     return user;
   }
   

@@ -1,19 +1,18 @@
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 import ICustomerRepository from '../repositories/ICustomerRepository';
-import { injectable, inject } from "tsyringe";
 
-@injectable()
 export default class FindAppointmentsByCustomerService {
   constructor(
-    @inject("CustomerRepository")
-    private CustomerRepository: ICustomerRepository
+    private CustomerRepository: ICustomerRepository,
+    private AppointmentRepository: IAppointmentRepository
     ){}
 
   public async execute(id: string): Promise<Appointment[]> {
     const appointments = await this.CustomerRepository.findAppointmentsByCustomer(id);
 
     if(!appointments) {
-      throw new Error ('no services found!');
+      throw new Error ('no appointments found!');
     }
     return appointments;
   }

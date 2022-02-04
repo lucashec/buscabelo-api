@@ -6,6 +6,7 @@ import FindProviderByIdService from '@modules/providers/services/FindProviderByI
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
 import ProviderRepository from '../../typeorm/repositories/ProviderRepository';
+import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository';
 
 export class ProviderController {
   private static INSTANCE : ProviderController;
@@ -136,9 +137,10 @@ export class ProviderController {
 
   async getAppointments(request: Request, response: Response) {
     const providerRepository = new ProviderRepository();
+    const appoinmentRepository = new AppointmentRepository();
     try {
       const { id } = request.params;
-      const service = new FindAppointmentsByProviderService(providerRepository);
+      const service = new FindAppointmentsByProviderService(providerRepository, appoinmentRepository);
 
       const appointments = await service.execute(id);
 
@@ -188,7 +190,14 @@ export class ProviderController {
 
       return response.status(200).json({
         success: true,
-        provider: provider
+        provider: {
+          type:'provider',
+          name: provider.name,
+          address: provider.address,
+          description: provider.description,
+          email: provider.email,
+          rating: provider.rating_average
+        }
       });
     } catch (err) {
       return response.status(400).json({
