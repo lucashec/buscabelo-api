@@ -6,9 +6,11 @@ import Appointment from '@modules/appointments/infra/typeorm/entities/Appointmen
  
 export default class CustomerRepository implements ICustomerRepository{
   private ormRepository : Repository<Customer>
+  private appointmentRepository : Repository<Appointment>
   
   public constructor(){
     this.ormRepository = getRepository(Customer);
+    this.appointmentRepository = getRepository(Appointment);
   }
   public async create(userDTO: IUserDTO): Promise<Customer>{
       const customer = await this.ormRepository.create(userDTO);
@@ -33,8 +35,10 @@ export default class CustomerRepository implements ICustomerRepository{
     return customer;
   }
   public async findAppointmentsByCustomer(id: string): Promise<Appointment[] | undefined>{
-    const appointments = await this.ormRepository.findOne(id);
-  
-    return appointments?.appointments; 
+    const appointments = await this.appointmentRepository.find({
+      customer: {id: id}
+    });
+    console.log(appointments);
+    return appointments; 
   }
 }

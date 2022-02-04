@@ -1,10 +1,7 @@
-import { injectable, inject } from 'tsyringe';
 import IProviderRepository from '../repositories/IProviderRepository';
 
-@injectable()
 export default class FindProviderByIdService {
   constructor(
-    @inject("ProviderRepository")
     private providerRepository: IProviderRepository
     ){}
 

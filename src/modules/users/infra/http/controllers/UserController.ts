@@ -22,10 +22,16 @@ export class UserController {
         user_id: request.user.id,
         avatarFileName: request.file!.filename,
       });
-
+  
       return response.json({
         success: true,
-        user
+        user: {
+          id: user.id,
+          name: user.name,
+          type: user.type,
+          email: user.email,
+          avatar: user.avatar
+        }
       });
     }
     catch (err) {

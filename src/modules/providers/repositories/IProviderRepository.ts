@@ -9,4 +9,6 @@ export default interface IProviderRepository{
   findById(id: string): Promise<Provider | undefined>;
   findByEmail(email: string): Promise<Provider | undefined>;
   filterByName(name: any): Promise<Provider[] | undefined>;
+  findAppointmentsByProvider(id: string):Promise<Appointment[] | undefined>;
+  findServicesByProvider(id: string): Promise<Service [] | undefined>
 }

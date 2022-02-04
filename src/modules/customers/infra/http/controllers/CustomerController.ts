@@ -4,6 +4,7 @@ import CreateCustomerService from '@modules/customers/services/CreateCustomerSer
 import GetAllCustomerService from '@modules/customers/services/GetAllCustomersService';
 import FindAppointmentsByCustomerService from '@modules/customers/services/FindAppointmentsByCustomerService';
 import { container } from "tsyringe";
+import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRepository';
 
 export class CustomerController{
   private static INSTANCE : CustomerController;
@@ -54,7 +55,13 @@ export class CustomerController{
 
       return response.status(200).json({
         success: true,
-        customer: customer
+        customer: {
+          id: customer?.id,
+          type: 'customer',
+          name: customer?.name,
+          email: customer?.email,
+          avatar: customer?.avatar
+        }
       });
     } catch (err) {
       return response.status(400).json({
@@ -65,9 +72,11 @@ export class CustomerController{
   }
 
   async getAppointments(request: Request, response: Response) {
+    const customerRepository = new CustomerRepository();
+    const appointmentRepository = new AppointmentRepository();
     try {
       const { id } = request.params;
-      const customerService = container.resolve(FindAppointmentsByCustomerService);
+      const customerService = new FindAppointmentsByCustomerService(customerRepository, appointmentRepository);
       const appointments = await customerService.execute(id);
 
       return response.status(200).json({

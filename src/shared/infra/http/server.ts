@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import 'reflect-metadata';
-import "../../../utils/seed.ts"
+// import "../../../utils/seed.ts"
 
 import express from 'express';
 import '@shared/infra/database/connect';
