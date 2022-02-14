@@ -7,6 +7,7 @@ const appointmentRouter = Router();
 const controller = AppointmentController.getInstance();
 
 appointmentRouter.post('/', ensureAuthenticated, controller.create);
+appointmentRouter.post('/confirm', controller.confirm);
 appointmentRouter.get('/', ensureAuthenticated, controller.getAll);
 appointmentRouter.get('/:id', ensureAuthenticated, controller.getById);
 appointmentRouter.patch('/cancel/:id', ensureAuthenticated, controller.cancel);

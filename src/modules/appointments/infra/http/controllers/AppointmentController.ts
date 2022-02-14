@@ -6,6 +6,7 @@ import CreateAppointmentService from '@modules/appointments/services/CreateAppoi
 import GetAllAppointmentsService from '@modules/appointments/services/GetAllAppointmentsService';
 import GetAppointmentByIdService from '@modules/appointments/services/GetAppointmentByIdService';
 import UpdateAppointmentService from '@modules/appointments/services/UpdateAppointmentService';
+import SendConfirmationEmailService from '@modules/appointments/services/SendConfirmationEmailService';
 
 export class AppointmentController {
   private static INSTANCE: AppointmentController;
@@ -340,6 +341,18 @@ export class AppointmentController {
         success: false,
         message: err.message
       });
+    }
+  }
+
+  public async confirm(request: Request, response: Response){
+    try {
+    const send = container.resolve(SendConfirmationEmailService);
+    await send.execute();
+    return response.json({
+      ok: true
+    })
+    } catch(e){
+      console.log(e)
     }
   }
 }
