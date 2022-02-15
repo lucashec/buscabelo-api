@@ -1,0 +1,41 @@
+<style>
+  .message-content {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 600px;
+    position: absolute;
+    top: 25%;
+    left:25%;
+    right: 25%;
+    margin: auto;
+    font-size: 18px;
+    line-height: 21px;
+    background-color: #e2dcdc;
+  }
+  .container{
+    margin: auto;
+    position: relative;
+    width: 50%;
+    height: 600px;
+    background-color: #f1eeee;
+    border-radius: 30px;
+    text-align: center;
+  }
+</style>
+
+<div class="container">
+
+    <div class="message-content">
+        <p>Olá, {{name}}</p>
+        <p>Há uma solicitação de agendamento para o dia: {{date}}</p>
+        <p>Para confirmar, clique no link abaixo:</p>
+        <p>
+          <a href="{{link}}">Confirmar agendamento</a>
+        </p>
+        <p>
+          Obrigado!<br />
+          <strong>Equipe Buscabelo</strong>
+        </p>
+      </div>
+      
+
+</div>

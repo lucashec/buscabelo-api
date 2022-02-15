@@ -1,28 +1,42 @@
 import Customer from "@modules/customers/infra/typeorm/entities/Customer";
 import Provider from "@modules/providers/infra/typeorm/entities/Provider";
 import IMailProvider from "@shared/containers/providers/MailProvider/models/IMailProvider";
-import { inject } from "tsyringe";
+import path from 'path'
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export default class SendConfirmationEmailService{
 
     constructor(
         @inject('MailProvider')
         private MailProvider: IMailProvider
     ){}
-    // provider: Provider, customer: Customer, date : Date
-    public async execute(){
-        await this.MailProvider.sendMail({
-            to: {
-                name: 'Lucas',
-                email: 'lucashenriqueev@gmail.com'
-            },
-            subject: '[Buscabelo] Confirmar agendamento',
-            templateData: {
-                file:'Olá, {{name}}',
-                variables:{
-                    provider_name: 'Lulinha'
-                }
-            }
-        });
+    public async execute(
+        provider: Provider,
+        date : string, 
+        id: number
+        ){
+    const confirmTempalte = path.resolve(
+        __dirname,
+        "..",
+        "views",
+        "confirm.hbs"
+    )
+
+    await this.MailProvider.sendMail({
+        to: {
+        name: provider.name,
+        email: provider.email
+        },
+        subject: '[Buscabelo] Confirmar agendamento',
+        templateData: {
+        file: confirmTempalte,
+        variables:{
+            link: `localhost/v1/appointments/confirm/${id}`,
+            name: provider.name,
+            date: date,
+           }
+        }
+    });
 }
 }

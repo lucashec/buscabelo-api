@@ -10,6 +10,12 @@ export default class Appointment{
   @PrimaryGeneratedColumn()
   id:number;
 
+  @Column({
+    type:'boolean',
+    default: false
+  })
+  confirmed: Boolean;
+  
   @Column('timestamp')
   scheduled_at: Date;
 
