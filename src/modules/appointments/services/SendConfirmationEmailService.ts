@@ -32,7 +32,7 @@ export default class SendConfirmationEmailService{
         templateData: {
         file: confirmTempalte,
         variables:{
-            link: `localhost/v1/appointments/confirm/${id}`,
+            link: `http://localhost/v1/appointments/confirm/${id}`,
             name: provider.name,
             date: date,
            }

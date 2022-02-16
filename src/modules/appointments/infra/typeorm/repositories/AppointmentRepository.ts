@@ -56,8 +56,7 @@ export default class AppointmentRepository implements IAppointmentRepository{
       appointment.customer = customerId!;
       appointment.service = serviceId!;
 
-      this.ormRepository.save(appointment);
-
+      await this.ormRepository.save(appointment);
       return appointment;
   }
   public async update(id: number, updateAppointment: any ): Promise<Appointment | undefined>{

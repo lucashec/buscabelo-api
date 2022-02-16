@@ -314,13 +314,13 @@ export class AppointmentController {
         service,
         scheduled_at: timeNowParsed,
       })
-
+      
       const getProvider = container.resolve(FindProviderByIdService)
       const currentProvider = getProvider.execute(provider);
       const send = container.resolve(SendConfirmationEmailService);
       await send.execute((await currentProvider), appointment.appointment_to.toString(), appointment.id);
-      
-      return response.json({
+
+      return response.status(200).json({
         success: true,
         appointment: {
           id: appointment?.id,
@@ -343,6 +343,7 @@ export class AppointmentController {
           }
         }
       });
+      
     } catch (err) {
       return response.status(400).json({
         success: false,
