@@ -77,10 +77,12 @@ export class AppointmentController {
           provider: {
             id: appointment?.provider.id,
             name: appointment?.provider.name,
+            avatar: appointment?.provider.avatar
           },
           customer: {
             id: appointment?.customer.id,
             name: appointment?.customer.name,
+            avatar: appointment?.provider.avatar
           },
           service: {
             id: appointment?.service.id,
@@ -296,7 +298,8 @@ export class AppointmentController {
         service,
       } = request.body;
 
-      const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd'));
+      // parseISO(format(new Date, 'yyyy-MM-dd'));
+      const timeNowParsed = new Date();
       const parsedDate = parseISO(appointment_to);
 
       if (isBefore(parsedDate, timeNowParsed)) {
@@ -318,7 +321,7 @@ export class AppointmentController {
       const getProvider = container.resolve(FindProviderByIdService)
       const currentProvider = getProvider.execute(provider);
       const send = container.resolve(SendConfirmationEmailService);
-      await send.execute((await currentProvider), appointment.appointment_to.toString(), appointment.id);
+      await send.execute((await currentProvider), appointment.appointment_to, appointment.id);
 
       return response.status(200).json({
         success: true,
@@ -331,10 +334,12 @@ export class AppointmentController {
           provider: {
             id: appointment?.provider.id,
             name: appointment?.provider.name,
+            avatar: appointment?.provider.avatar
           },
           customer: {
             id: appointment?.customer.id,
             name: appointment?.customer.name,
+            avatar: appointment?.customer.avatar
           },
           service: {
             id: appointment?.service.id,

@@ -45,7 +45,7 @@ export default class CreateAppointmentService {
       appointment_to: appointmentDate,
       scheduled_at: scheduledDate,
     });
-    console.log(appointment);
+
     return appointment;
   }
 }

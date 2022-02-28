@@ -18,6 +18,7 @@ import IMailTemplateProvider from '@shared/containers/providers/MailTemplateProv
 import HandlebarsMailTemplateProvider from './providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
 import IMailProvider from './providers/MailProvider/models/IMailProvider';
 import EtherealMailProvider from './providers/MailProvider/implementations/EtherealMailProvider';
+import SESEmailProvider from './providers/MailProvider/implementations/SESMailProvider'
 
 container.registerSingleton<ICustomerRepository>(
     'CustomerRepository',
@@ -56,5 +57,5 @@ container.registerSingleton<IMailTemplateProvider>(
   
   container.registerInstance<IMailProvider>(
     "MailProvider",
-    container.resolve(EtherealMailProvider),
+    container.resolve(SESEmailProvider),
   );

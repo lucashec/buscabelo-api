@@ -19,7 +19,11 @@ export default class AppointmentRepository implements IAppointmentRepository{
     this.serviceRepository = getRepository(Service);
   }
   public async getAllAppointments(): Promise<Appointment[] | undefined> {
-    const appointments = await this.ormRepository.find();
+    const appointments = await this.ormRepository.find({
+      order: {
+        scheduled_at: "DESC"
+      }
+    });
     return appointments;
   }
   public async findAppointmentById(id: number): Promise<Appointment | undefined> {

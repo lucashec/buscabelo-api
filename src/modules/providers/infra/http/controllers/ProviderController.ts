@@ -79,7 +79,8 @@ export class ProviderController {
           address: provider.address,
           description: provider.description,
           email: provider.email,
-          rating: provider.rating_average
+          rating: provider.rating_average,
+          avatar: provider.avatar
         }
       });
     } catch (err) {
@@ -108,7 +109,10 @@ export class ProviderController {
             id: service.provider.id,
             name: service.provider.name,
             rating: service.provider.rating_average
-          }
+          },
+          images: service.images.map(image => ({
+            url: image.url,
+          }))
         }))
       });
     } catch (err) {

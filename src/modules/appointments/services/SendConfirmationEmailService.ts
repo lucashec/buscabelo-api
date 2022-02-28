@@ -13,7 +13,7 @@ export default class SendConfirmationEmailService{
     ){}
     public async execute(
         provider: Provider,
-        date : string, 
+        date : Date, 
         id: number
         ){
     const confirmTempalte = path.resolve(
@@ -22,6 +22,11 @@ export default class SendConfirmationEmailService{
         "views",
         "confirm.hbs"
     )
+    function parse(date: Date){
+        let formated = date.toLocaleDateString();
+        let splitted = formated.split('/');
+        return `${splitted[1]}/${splitted[0]}/${splitted[2]}`
+      }
 
     await this.MailProvider.sendMail({
         to: {
@@ -34,9 +39,11 @@ export default class SendConfirmationEmailService{
         variables:{
             link: `http://localhost/v1/appointments/confirm/${id}`,
             name: provider.name,
-            date: date,
+            date: parse(date),
+            hours: date.getHours()
            }
         }
     });
 }
+
 }
