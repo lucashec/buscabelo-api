@@ -15,6 +15,7 @@ providerRouter.get('/:id/services',controller.getServices);
 providerRouter.get('/:id/appointments', controller.getAppointments);
 providerRouter.get('/:id', controller.getById);
 providerRouter.get('/', controller.getAll);
+providerRouter.post('/rating', controller.updateRating);
 providerRouter.post('/', controller.create);
 providerRouter.patch('/avatar',
 EnsureAuthenticated,

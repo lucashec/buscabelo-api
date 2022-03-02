@@ -55,4 +55,8 @@ export default class ProviderRepository implements IProviderRepository{
     });
     return services; 
   }
+  public async save(provider: Provider): Promise<Provider>{
+    const updatedProvider = await this.ormRepository.save(provider);
+    return updatedProvider;
+  }
 }

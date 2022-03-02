@@ -19,6 +19,8 @@ import HandlebarsMailTemplateProvider from './providers/MailTemplateProvider/imp
 import IMailProvider from './providers/MailProvider/models/IMailProvider';
 import EtherealMailProvider from './providers/MailProvider/implementations/EtherealMailProvider';
 import SESEmailProvider from './providers/MailProvider/implementations/SESMailProvider'
+import IRatingRepository from '@modules/providers/repositories/IRatingRepository';
+import RatingRepository from '@modules/providers/infra/typeorm/repositories/RatingRepository';
 
 container.registerSingleton<ICustomerRepository>(
     'CustomerRepository',
@@ -44,6 +46,10 @@ container.registerSingleton<IAppointmentRepository>(
 container.registerSingleton<IImageRepository>(
     'ImageRepository',
     ImageRepository
+);
+container.registerSingleton<IRatingRepository>(
+    'RatingRepository',
+    RatingRepository
 );
 container.registerSingleton<IStorageProvider>(
     'StorageProvider',

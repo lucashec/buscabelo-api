@@ -11,4 +11,5 @@ export default interface IProviderRepository{
   filterByName(name: any): Promise<Provider[] | undefined>;
   findAppointmentsByProvider(id: string):Promise<Appointment[] | undefined>;
   findServicesByProvider(id: string): Promise<Service [] | undefined>
+  save(provider: Provider): Promise<Provider>;
 }
