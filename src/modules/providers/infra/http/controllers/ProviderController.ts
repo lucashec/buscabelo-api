@@ -7,6 +7,7 @@ import FindAppointmentsByProviderService from '@modules/providers/services/FindA
 import FindProviderByIdService from '@modules/providers/services/FindProviderByIdService';
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
+import UpdateRatingAverageService from '@modules/providers/services/UpdateRatingAverageService';
 
 export class ProviderController {
   private static INSTANCE: ProviderController;
@@ -81,7 +82,8 @@ export class ProviderController {
           address: provider.address,
           description: provider.description,
           email: provider.email,
-          rating: provider.rating_average
+          rating: provider.rating_average,
+          avatar: provider.avatar
         }
       });
     } catch (err) {
@@ -110,7 +112,10 @@ export class ProviderController {
             id: service.provider.id,
             name: service.provider.name,
             rating: service.provider.rating_average
-          }
+          },
+          images: service.images.map(image => ({
+            url: image.url,
+          }))
         }))
       });
     } catch (err) {
@@ -181,6 +186,31 @@ export class ProviderController {
         }
       });
     } catch (err) {
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  }
+  async updateRating(request: Request, response: Response){
+    const {rating_number , provider} = request.body;
+    const service = container.resolve(UpdateRatingAverageService);
+    try {
+      const updatedProvider = await service.execute({
+        rating_number,
+        provider,
+      })
+      return response.status(200).json({
+        success: true,
+        provider: {
+          name: updatedProvider.name,
+          address: updatedProvider.address,
+          description: updatedProvider.description,
+          email: updatedProvider.email,
+          rating: updatedProvider.rating_average
+        }
+      });
+    } catch(err){
       return response.status(400).json({
         success: false,
         message: err.message

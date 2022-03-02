@@ -2,10 +2,13 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import { parseISO, format, addHours, isBefore } from 'date-fns';
+import path from 'path';
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import GetAllAppointmentsService from '@modules/appointments/services/GetAllAppointmentsService';
 import GetAppointmentByIdService from '@modules/appointments/services/GetAppointmentByIdService';
 import UpdateAppointmentService from '@modules/appointments/services/UpdateAppointmentService';
+import SendConfirmationEmailService from '@modules/appointments/services/SendConfirmationEmailService';
+import FindProviderByIdService from '@modules/providers/services/FindProviderByIdService';
 
 export class AppointmentController {
   private static INSTANCE: AppointmentController;
@@ -74,10 +77,12 @@ export class AppointmentController {
           provider: {
             id: appointment?.provider.id,
             name: appointment?.provider.name,
+            avatar: appointment?.provider.avatar
           },
           customer: {
             id: appointment?.customer.id,
             name: appointment?.customer.name,
+            avatar: appointment?.provider.avatar
           },
           service: {
             id: appointment?.service.id,
@@ -293,7 +298,8 @@ export class AppointmentController {
         service,
       } = request.body;
 
-      const timeNowParsed = parseISO(format(new Date, 'yyyy-MM-dd'));
+      // parseISO(format(new Date, 'yyyy-MM-dd'));
+      const timeNowParsed = new Date();
       const parsedDate = parseISO(appointment_to);
 
       if (isBefore(parsedDate, timeNowParsed)) {
@@ -311,8 +317,13 @@ export class AppointmentController {
         service,
         scheduled_at: timeNowParsed,
       })
+      
+      const getProvider = container.resolve(FindProviderByIdService)
+      const currentProvider = getProvider.execute(provider);
+      const send = container.resolve(SendConfirmationEmailService);
+      await send.execute((await currentProvider), appointment.appointment_to, appointment.id);
 
-      return response.json({
+      return response.status(200).json({
         success: true,
         appointment: {
           id: appointment?.id,
@@ -323,10 +334,12 @@ export class AppointmentController {
           provider: {
             id: appointment?.provider.id,
             name: appointment?.provider.name,
+            avatar: appointment?.provider.avatar
           },
           customer: {
             id: appointment?.customer.id,
             name: appointment?.customer.name,
+            avatar: appointment?.customer.avatar
           },
           service: {
             id: appointment?.service.id,
@@ -335,6 +348,44 @@ export class AppointmentController {
           }
         }
       });
+      
+    } catch (err) {
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  }
+
+  // async sendEmail(request: Request, response: Response){
+  //   try {
+  //   const send = container.resolve(SendConfirmationEmailService);
+  //   await send.execute();
+  //   return response.json({
+  //     ok: true
+  //   })
+  //   } catch(e){
+  //     console.log(e)
+  //   }
+  // }
+
+  async confirmAppointment(request: Request, response: Response){
+    try {
+      const { id } = request.params;
+      const appointmentService = container.resolve(UpdateAppointmentService);
+      const appointment = await appointmentService.execute(Number(id), {
+        confirmed: true,
+      })
+      console.log(appointment?.confirmed);
+
+      return response.sendFile(path.join(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'views',
+        'confirmed.html'
+      ))
     } catch (err) {
       return response.status(400).json({
         success: false,

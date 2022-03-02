@@ -35,7 +35,7 @@ export default class Service {
   @ManyToOne((type) => Provider, (provider) => provider.services, { eager: true })
   provider: Provider
 
-  @OneToMany(() => Image, (image) => image.service)
+  @OneToMany(() => Image, (image) => image.service, {eager: true})
   images: Image [];
 
   @OneToMany(() => Appointment, (appointment) => appointment.provider)

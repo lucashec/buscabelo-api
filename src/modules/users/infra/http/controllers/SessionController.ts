@@ -31,7 +31,8 @@ export class SessionController {
           id: user.id,
           name: user.name,
           email: user.email,
-          type: user.type
+          type: user.type,
+          avatar: user.avatar
         }
       });
     } catch (err) {
@@ -84,7 +85,8 @@ export class SessionController {
           id: user.id,
           name: user.name,
           email: user.email,
-          type: user.type
+          type: user.type,
+          avatar: user.avatar
         },
         token
       });

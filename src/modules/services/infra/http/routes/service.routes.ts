@@ -13,6 +13,7 @@ const imageController = ImageController.getInstance();
 serviceRouter.get('/search', controller.filters);
 serviceRouter.get('/', ensureAuthenticated, controller.getAll);
 serviceRouter.get('/:id', controller.getById);
+serviceRouter.get('/:id/images', imageController.GetImagesByService)
 serviceRouter.post('/', ensureAuthenticated, controller.create);
 serviceRouter.put('/:id', ensureAuthenticated, controller.update);
 serviceRouter.delete('/:id', ensureAuthenticated, controller.remove);

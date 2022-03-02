@@ -14,6 +14,13 @@ import S3StorageProvider from './providers/StorageProvider/implementations/S3Sto
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
 import ImageRepository from '@modules/services/infra/typeorm/repositories/ImageRepository';
 import IImageRepository from '@modules/services/repositories/IImageRepository';
+import IMailTemplateProvider from '@shared/containers/providers/MailTemplateProvider/models/IMailTemplateProvider';
+import HandlebarsMailTemplateProvider from './providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
+import IMailProvider from './providers/MailProvider/models/IMailProvider';
+import EtherealMailProvider from './providers/MailProvider/implementations/EtherealMailProvider';
+import SESEmailProvider from './providers/MailProvider/implementations/SESMailProvider'
+import IRatingRepository from '@modules/providers/repositories/IRatingRepository';
+import RatingRepository from '@modules/providers/infra/typeorm/repositories/RatingRepository';
 
 container.registerSingleton<ICustomerRepository>(
     'CustomerRepository',
@@ -40,7 +47,21 @@ container.registerSingleton<IImageRepository>(
     'ImageRepository',
     ImageRepository
 );
+container.registerSingleton<IRatingRepository>(
+    'RatingRepository',
+    RatingRepository
+);
 container.registerSingleton<IStorageProvider>(
     'StorageProvider',
     S3StorageProvider
 );
+
+container.registerSingleton<IMailTemplateProvider>(
+    "MailTemplateProvider",
+    HandlebarsMailTemplateProvider,
+  );
+  
+  container.registerInstance<IMailProvider>(
+    "MailProvider",
+    container.resolve(SESEmailProvider),
+  );
