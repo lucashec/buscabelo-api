@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import UploadImageManager from '@modules/services/managers/UploadImageManager';
+import FindImagesByServiceManager from '@modules/services/managers/FindImagesByServiceManager';
 
 export class ImageController {
   private static INSTANCE: ImageController;
@@ -36,6 +37,26 @@ export class ImageController {
         success: false,
         message: err.message,
       });
+    }
+  }
+  async GetImagesByService(request: Request, response: Response){
+    const {id} = request.params;
+    
+    try{
+      const manager = container.resolve(FindImagesByServiceManager);
+      const images = await manager.execute(Number(id));
+
+      return response.json({
+        success: true,
+        images: images!.map(image => ({
+          url: image.url,
+        })) 
+      })
+    } catch (err){
+      return response.status(400).json({
+        success: false,
+        message: err.message,
+      })
     }
   }
 }

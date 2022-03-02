@@ -17,4 +17,10 @@ export default class ImageRepository implements IImageRepository{
   
         return image;
     }
+    public async findImageByServiceId(id: number): Promise<Image [] | undefined>{
+        const images = await this.ormRepository.find({
+            where: {service: id}
+        })
+        return images;
+    }
 }
