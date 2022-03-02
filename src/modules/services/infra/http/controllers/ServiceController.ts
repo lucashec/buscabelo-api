@@ -2,7 +2,7 @@ import { Request, Response, } from 'express';
 import { container } from 'tsyringe';
 
 import DeleteServiceManager from '@modules/services/managers/DeleteServiceManager';
-import FilterByNameManager from '@modules/services/managers/FilterByNameManager';
+import FindServiceByFilterManager from '@modules/services/managers/FindServiceByFilterManager';
 import FindByProviderManager from '@modules/services/managers/FindByProviderManager';
 import FindServiceByIdManager from '@modules/services/managers/FindServiceByIdManager';
 import UpdateServiceManager from '@modules/services/managers/UpdateServiceManager';
@@ -76,12 +76,11 @@ export class ServiceController {
     }
   }
 
-  async filterName(request: Request, response: Response) {
+  async filters(request: Request, response: Response) {
     try {
-      let name = request.query["name"];
-
-      const manager = container.resolve(FilterByNameManager);
-      const services = await manager.execute(name);
+      let { name, maxPrice, minPrice, serviceType } = request.query;
+      const manager = container.resolve(FindServiceByFilterManager);
+      const services = await manager.execute(name, maxPrice, minPrice, serviceType);
 
       return response.status(200).json({
         success: true,
@@ -92,8 +91,8 @@ export class ServiceController {
           value: service.value,
           type: service.type,
           provider: {
-            id: service.provider.id,
-            name: service.provider.name,
+            id: service.provider?.id,
+            name: service.provider?.name,
           }
         }))
       });
