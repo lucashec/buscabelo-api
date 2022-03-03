@@ -23,6 +23,11 @@ export default class ServiceRepository implements IServiceRepository {
 
     return service;
   }
+  public async findAll(): Promise<Service[] | undefined> {
+      const services = await this.ormRepository.find();
+      console.log(services);
+      return services;
+  }
 
   public async findByProvider(provider: string): Promise<Service[] | undefined> {
     const services = await this.ormRepository.find({
