@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destinatition: home/ubuntu/API
+    destination: home/ubuntu/API
 hooks:
   ApplicationStop:
     - location: scripts/application_stop.sh
