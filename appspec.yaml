@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destinatition: home/ubuntu/API
+hook:
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 300
+      runas: ubuntu
+  BeforaInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart:
+    - localtion: scripts/application_start.sh
+      timeout: 300
+      runas: ubuntu
+  
