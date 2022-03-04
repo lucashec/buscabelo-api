@@ -48,6 +48,7 @@ export class UserController {
       return response.status(200).json({
         success: true,
         user: {
+          id: user.id,
           name: user.name,
           type: user.type,
           email: user.email,
