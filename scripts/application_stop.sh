@@ -1,12 +1,11 @@
 #!/bin/bash
 
-FILE="/home/ubuntu/API/docker-compose.yaml"
+CONTAINER_NAME='buscabelo-api'
 
-if [ -f "$FILE" ]; then {
-    echo "Stopping the containers"
-    sudo docker-compose down
-}    
-else
-    echo "No containers found"
+CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+if [ ! "${CID}" ]; then
+  echo "Container doesn't exist"
+else sudo docker-compose down
 fi
 
+unset CID
