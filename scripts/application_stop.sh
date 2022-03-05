@@ -1,8 +1,9 @@
 #!/bin/bash
 
 DIR="/home/ubuntu/API"
+FILE="/home/ubuntu/docker-compose.yaml"
 
-if [ -d "$DIR" ]; then {
+if [ -d "$DIR" ] && [ -f "$FILE" ]; then {
     echo "Stopping the containers"
     cd $DIR && sudo docker-compose down
 }
