@@ -49,13 +49,10 @@ export class ServiceController {
 
   async getServiceTypes(request: Request, response: Response) {
     
-    console.log("AQIO");
     try {
       const serviceManager = container.resolve(FindServiceTypesManager);
 
       const types = await serviceManager.execute()
-      console.log({types});
-      
       return response.status(200).json({
         success: true,
         types
