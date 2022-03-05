@@ -3,6 +3,7 @@ import Service from "../infra/typeorm/entities/Service";
 
 export default interface IServiceRepository{
   findByProvider(provider:string): Promise<Service [] | undefined>;
+  findServiceTypes(): Promise<String[] | undefined>
   findById(id:number): Promise<Service | undefined>;
   filterByArguments(name: string | null, maxPrice: number | null, minPrice: number | null, serviceType: string | null): Promise<Service[] | undefined>;
   filterByName(name: any): Promise<Service[] | undefined>;
