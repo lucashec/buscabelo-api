@@ -7,6 +7,7 @@ import FindByProviderManager from '@modules/services/managers/FindByProviderMana
 import FindServiceByIdManager from '@modules/services/managers/FindServiceByIdManager';
 import UpdateServiceManager from '@modules/services/managers/UpdateServiceManager';
 import CreateServiceManager from '@modules/services/managers/CreateServiceManager';
+import FindServiceTypesManager from '@modules/services/managers/FindServiceTypesManager';
 
 export class ServiceController {
   private static INSTANCE: ServiceController;
@@ -40,6 +41,25 @@ export class ServiceController {
 
     } catch (err) {
       return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  }
+
+  async getServiceTypes(request: Request, response: Response) {
+    
+    try {
+      const serviceManager = container.resolve(FindServiceTypesManager);
+
+      const types = await serviceManager.execute()
+      return response.status(200).json({
+        success: true,
+        types
+      });
+      
+    } catch (err) {
+      return response.status(500).json({
         success: false,
         message: err.message
       });
