@@ -28,6 +28,8 @@ export default class CreateProviderService {
       name: newProvider.name,
       email: newProvider.email,
       password: hashedPassword,
+      description: newProvider.description,
+      address: newProvider.address
     });
   
     provider.then(provider => {

@@ -167,11 +167,13 @@ export class ProviderController {
   async create(request: Request, response: Response) {
     try {
       const service = container.resolve(CreateProviderService);
-      const { name, email, password } = request.body;
+      const { name, email, password, description, address } = request.body;
       const provider = await service.execute({
         name,
         email,
-        password
+        password,
+        description,
+        address
       });
 
       return response.status(200).json({
