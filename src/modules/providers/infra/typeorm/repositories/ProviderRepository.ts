@@ -59,4 +59,18 @@ export default class ProviderRepository implements IProviderRepository{
     const updatedProvider = await this.ormRepository.save(provider);
     return updatedProvider;
   }
+
+  public async findTop5Providers(): Promise<Provider[]>{
+    const providers = await this.ormRepository.query(`
+      select u.*, avg(r.rating_number) from public.user u 
+      join public.rating r on r."providerId" = u.id 
+      where u."type" = 'Provider' and 2 < (
+        select count(id) from 
+        public.rating ra where 
+        ra."providerId" = u.id
+      ) group by u."id" order by avg(r.rating_number) desc limit 5;
+    `)
+    
+    return providers; 
+  }
 }
