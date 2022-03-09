@@ -1,9 +1,9 @@
 import {getRepository, Repository, ILike} from 'typeorm';
 import IProviderRepository from '@modules/providers/repositories/IProviderRepository'
 import Provider from '../entities/Provider';
-import IUserDTO from '@modules/users/dtos/IUserDTO';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import Service from '@modules/services/infra/typeorm/entities/Service';
+import IProviderDTO from '@modules/providers/dtos/IProviderDTO';
 
 export default class ProviderRepository implements IProviderRepository{
   private ormRepository : Repository<Provider>
@@ -15,10 +15,10 @@ export default class ProviderRepository implements IProviderRepository{
     this.appointmentRepository = getRepository(Appointment);
     this.serviceRepository =  getRepository(Service);
   }
-  public async create(userDTO: IUserDTO): Promise<Provider>{
-      const provider = await this.ormRepository.create(userDTO);
+  public async create(providerDTO: IProviderDTO): Promise<Provider>{
+      const provider = await this.ormRepository.create(providerDTO);
       
-      this.ormRepository.save(userDTO);
+      this.ormRepository.save(providerDTO);
 
       return provider;
   }

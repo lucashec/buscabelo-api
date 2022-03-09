@@ -24,9 +24,9 @@ export default class CreateServiceManager{
   public async execute(newService:IService): Promise<Service> {
     const checkIsCustomer =  await this.providerRepository.findById(newService.provider.id);
 
-    // if(checkIsCustomer){
-    //   throw new Error ('User must be a provider');
-    // }
+    if(checkIsCustomer){
+      throw new Error ('User must be a provider');
+    }
 
     const service = this.serviceRepository.create(newService);
     return service;

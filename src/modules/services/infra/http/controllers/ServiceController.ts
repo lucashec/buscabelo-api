@@ -7,6 +7,7 @@ import FindByProviderManager from '@modules/services/managers/FindByProviderMana
 import FindServiceByIdManager from '@modules/services/managers/FindServiceByIdManager';
 import UpdateServiceManager from '@modules/services/managers/UpdateServiceManager';
 import CreateServiceManager from '@modules/services/managers/CreateServiceManager';
+import GetAllServicesManager from '@modules/services/managers/GetAllServicesManager';
 import FindServiceTypesManager from '@modules/services/managers/FindServiceTypesManager';
 
 export class ServiceController {
@@ -212,6 +213,31 @@ export class ServiceController {
         }
       });
     } catch (err) {
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  }
+  async getAllServices(request: Request, response: Response){
+    try {
+      const manager = container.resolve(GetAllServicesManager);
+      const services = await manager.execute();
+      return response.status(200).json({
+        success: true,
+        services: services?.map(service => ({
+          id: service.id,
+          name: service.name,
+          description: service.description,
+          value: service.value,
+          type: service.type,
+          provider: {
+            id: service.provider.id,
+            name: service.provider.name,
+          }
+        }))
+      });
+    } catch (err){
       return response.status(400).json({
         success: false,
         message: err.message

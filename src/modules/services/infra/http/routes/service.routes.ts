@@ -11,6 +11,7 @@ const controller = ServiceController.getInstance();
 const imageController = ImageController.getInstance();
 
 serviceRouter.get('/search', controller.filters);
+serviceRouter.get('/public', controller.getAllServices);
 serviceRouter.get('/types', controller.getServiceTypes)
 serviceRouter.get('/', ensureAuthenticated, controller.getAll);
 serviceRouter.get('/:id', controller.getById);
