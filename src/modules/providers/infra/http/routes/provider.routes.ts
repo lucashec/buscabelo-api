@@ -11,7 +11,7 @@ const controller = ProviderController.getInstance();
 const userController = UserController.getInstance();
 
 providerRouter.get('/search', controller.filterName);
-providerRouter.get('/top5', controller.getTop5);
+providerRouter.get('/top', controller.getTop5);
 providerRouter.get('/:id/services',controller.getServices);
 providerRouter.get('/:id/appointments', controller.getAppointments);
 providerRouter.get('/:id', controller.getById);
