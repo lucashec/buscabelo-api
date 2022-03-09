@@ -8,6 +8,7 @@ import FindProviderByIdService from '@modules/providers/services/FindProviderByI
 import FindServicesByProviderService from '@modules/providers/services/FindServicesByProviderService';
 import GetAllProvidersService from '@modules/providers/services/GetAllProvidersService';
 import UpdateRatingAverageService from '@modules/providers/services/UpdateRatingAverageService';
+import GetTop5ProvidersService from '@modules/providers/services/GetTop5ProvidersService';
 
 export class ProviderController {
   private static INSTANCE: ProviderController;
@@ -194,6 +195,7 @@ export class ProviderController {
       });
     }
   }
+
   async updateRating(request: Request, response: Response){
     const {rating_number , provider} = request.body;
     const service = container.resolve(UpdateRatingAverageService);
@@ -218,5 +220,35 @@ export class ProviderController {
         message: err.message
       });
     }
+  }
+
+  async getTop5(request: Request, response: Response) {
+
+    const service = container.resolve(GetTop5ProvidersService);
+    
+    try {
+      const providers = await service.execute()
+      .then((_providers: any[]) => {
+
+        return _providers.map((provider: any) => ({ 
+          name: provider.name,
+          id: provider.id,
+          rating_number: provider.avg,
+          email: provider.email,
+          avatar: provider.avatar,
+        }))
+      })
+      
+      return response.status(200).json({
+        success: true,
+        providers,
+      });
+    } catch(err){
+      return response.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+
   }
 }

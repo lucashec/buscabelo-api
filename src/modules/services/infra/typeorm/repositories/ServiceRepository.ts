@@ -39,6 +39,17 @@ export default class ServiceRepository implements IServiceRepository {
     return services;
   }
 
+  public async findServiceTypes(): Promise<String[] | undefined> {
+    let types_nested = await this.ormRepository.query("SELECT unnest(enum_range(NULL::service_type_enum))")
+    let types: String[] = []
+    types_nested.forEach((type: any) => {
+      if(type.unnest) {
+        types.push(type.unnest)
+      }
+    })
+    return types;
+  }
+
   public async findById(id: number): Promise<Service | undefined> {
     const service = this.ormRepository.findOne(id);
     return service;
