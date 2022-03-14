@@ -14,7 +14,7 @@ export default class ServiceRepository implements IServiceRepository {
   }
 
   public async create(serviceDTO: IServiceDTO): Promise<Service> {
-    const service = await this.ormRepository.create(serviceDTO);
+    const service = this.ormRepository.create(serviceDTO);
     const provider = await this.providerRepository.findOne({
       where: { id: serviceDTO.provider },
     });
