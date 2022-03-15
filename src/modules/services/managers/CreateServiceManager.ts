@@ -18,16 +18,15 @@ export default class CreateServiceManager{
   constructor(
     @inject('ServiceRepository')
     private serviceRepository : IServiceRepository, 
-    @inject('ProviderRepository')
+    @inject('CustomerRepository')
     private providerRepository : ICustomerRepository
   ) {}
 
   public async execute(newService:IService): Promise<Service> {
-    const checkIsCustomer =  await this.providerRepository.findById(newService.provider.id);
-
-    // if(checkIsCustomer){
-    //   throw new Error ('User must be a provider');
-    // }
+    const checkIsCustomer = await this.providerRepository.findById(newService.provider.toString());
+    if(checkIsCustomer!.type === 'Customer'){
+      throw new Error ('User must be a provider');
+    }
 
     const service = this.serviceRepository.create(newService);
     return service;
