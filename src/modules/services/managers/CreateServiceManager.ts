@@ -4,6 +4,7 @@ import Provider from '@modules/providers/infra/typeorm/entities/Provider';
 import Service from '@modules/services/infra/typeorm/entities/Service';
 import IServiceRepository from '../repositories/iServiceRepository';
 import ICustomerRepository from '@modules/customers/repositories/ICustomerRepository';
+import IProviderRepository from '@modules/providers/repositories/IProviderRepository';
 
 interface IService{
   name: string;
@@ -18,13 +19,13 @@ export default class CreateServiceManager{
   constructor(
     @inject('ServiceRepository')
     private serviceRepository : IServiceRepository, 
-    @inject('CustomerRepository')
-    private providerRepository : ICustomerRepository
+    @inject('ProviderRepository')
+    private providerRepository : IProviderRepository
   ) {}
 
   public async execute(newService:IService): Promise<Service> {
-    const checkIsCustomer = await this.providerRepository.findById(newService.provider.toString());
-    if(checkIsCustomer!.type === 'Customer'){
+    const checkIsProvider = await this.providerRepository.findById(newService.provider.toString());
+    if(!checkIsProvider){
       throw new Error ('User must be a provider');
     }
 

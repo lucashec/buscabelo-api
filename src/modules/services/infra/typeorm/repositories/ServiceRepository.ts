@@ -25,7 +25,6 @@ export default class ServiceRepository implements IServiceRepository {
   }
   public async findAll(): Promise<Service[] | undefined> {
       const services = await this.ormRepository.find();
-      console.log(services);
       return services;
   }
 
@@ -40,7 +39,7 @@ export default class ServiceRepository implements IServiceRepository {
   }
 
   public async findServiceTypes(): Promise<String[] | undefined> {
-    let types_nested = await this.ormRepository.query("SELECT unnest(enum_range(NULL::service_type_enum))")
+    let types_nested = await this.ormRepository.query("SELECT DISTINCT FROM services")
     let types: String[] = []
     types_nested.forEach((type: any) => {
       if(type.unnest) {
