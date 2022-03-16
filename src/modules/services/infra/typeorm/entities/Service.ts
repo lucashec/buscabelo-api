@@ -5,6 +5,12 @@ import Provider from '@modules/providers/infra/typeorm/entities/Provider';
 import Image from './Image';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
+export enum Type {
+  Haircut = 'Corte',
+  Haircare = 'Tratamento',
+  Barb = 'Barba',
+  Default = '',
+}
 
 @Entity()
 export default class Service {
@@ -20,8 +26,12 @@ export default class Service {
   @Column({ type: 'float' })
   value: number;
 
-  @Column({default: ''})
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: Type,
+    default: Type.Default,
+  })
+  type: Type;
 
   @ManyToOne((type) => Provider, (provider) => provider.services, { eager: true })
   provider: Provider
