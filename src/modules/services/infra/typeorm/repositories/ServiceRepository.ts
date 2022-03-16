@@ -39,11 +39,11 @@ export default class ServiceRepository implements IServiceRepository {
   }
 
   public async findServiceTypes(): Promise<String[] | undefined> {
-    let types_nested = await this.ormRepository.query("SELECT DISTINCT FROM services")
+    let types_nested = await this.ormRepository.query("SELECT DISTINCT type FROM service")
     let types: String[] = []
     types_nested.forEach((type: any) => {
-      if(type.unnest) {
-        types.push(type.unnest)
+      if(type) {
+        types.push(type)
       }
     })
     return types;
