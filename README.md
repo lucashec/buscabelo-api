@@ -1,31 +1,29 @@
-# API da Plataforma Buscabelo
+# Buscabelo API
 
-| Recomendações |
-| ---------- |
-| [Insomnia](https://insomnia.rest/) |
-| [PostegreSQL](https://www.postgresql.org/) |
+O Buscabelo é uma plataforma para conectar pessoas que desejam oferecer serviços relacionados à estética (corte de cabelo, barba e etc). O Projeto foi desenvolvido como um entregável das disciplinas de Projeto de Desenvolvimento de Software 1, 2 e 3 ministradas no IFRN no Curso de Análise e Desenvolvimento de Sistemas, sendo progressivamente escalado ao longo de 3 semestres consecutivos. Durante esse período, o sistema passou por todo intinerário de um produto de software, desde o levantamento de requisitos e refino dos requisitos por parte da equipe de desenvolvimento e o Proudct Owner. A implementação inicial se deu com uma aplicação web construída em Django, posteriormente substituída por um sistema distrubuído com uma API em NodeJS e o front em React. Até chegar ao estado que se encontra, com incrementos de containers Docker, refatoração da arquitetura e integração contínua.
 
-## Para rodar a aplicação
+## Novos Aprendizados
+- Autenticação com JWT
+- Upload de arquivos 
+- Conceito de Arquitetura em Camadas
+- Documentação da API com Swagger
+- Injeção de Dependência
+- Estratégia de Repository para abstração da ORM
+- Single-Responsibility Principle
+- Liskov Substitution Principle
+- IoC
+- Docker
+- Proxy Reverso com NGINX
+- Testes Unitários com Jest
+- Testes Funcionais com Cypress
+- Shell script para o CI
+- Deploy na AWS 
+- Envio de email
 
-**Para Rodar a aplicação você precisa ter o postegres instalado na maquina e com um banco de dados já criado. Verifique o arquivo ormconfig.json para colocar as informações do seu banco local.**
+### Exemplos de Requisições
 
-Abra o terminal e ultilize o comando abaixo para instalar as dependências:
-
-```sh
-$ yard
-```
-
-Após isso, ultize o comando:
-
-```sh
-$ yarn dev
-```
-
- Agora você pode ultilizar o Insomnia (Ou outro plataforma para testar as requisições da API) para testar a API na URL http://localhost:3000/v1
-
- Para acessar a documentação via swagger acesse a rota : http://localhost:3000/api-doc
-
- ## Documentações
-
- - [Buscabelo](https://gitlab.devops.ifrn.edu.br/tads.cnat/pdsdistribuido/2021.1/buscabelo/buscabelo-general)
- - [Node.js](https://nodejs.org/en/docs/)
+<p align="center">
+    <img src="./screens/img1.png">
+    <img src="./screens/img2.png">
+    <img src="./screens/img3.png">
+</p>
