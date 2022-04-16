@@ -23,7 +23,7 @@ O Buscabelo é uma plataforma para conectar pessoas que desejam oferecer serviç
 ### Exemplos de Requisições
 
 <p align="center">
-    <img src="./screens/img1.png">
-    <img src="./screens/img2.png">
-    <img src="./screens/img3.png">
+    <img src="https://github.com/lucashec/buscabelo-api/blob/main/screens/img1.png?raw=true">
+    <img src="https://github.com/lucashec/buscabelo-api/blob/main/screens/img2.png?raw=true">
+    <img src="https://github.com/lucashec/buscabelo-api/blob/main/screens/img3.png?raw=true">
 </p>
